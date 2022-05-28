@@ -1,0 +1,341 @@
+$borderColor: #ededed;
+$hoverColor: #f5f5f6;
+$fontColor: #bbbbbb;
+$listFontColor:#777777;
+
+.contact-content{
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .list-panel{
+    width: 15%;
+    height: 100%;
+    overflow-y: auto;
+    min-width: 214px;
+    border-right: solid 1px $borderColor;
+
+    .top-panel{
+      width: 90%;
+      height: 70px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: solid 1px $borderColor;
+
+      .add-friend-panel{
+        width: 100%;
+        height: 30px;
+        border: solid 1px $borderColor;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: default;
+
+        &:hover{
+          background: $hoverColor;
+        }
+
+        p{
+          font-size: 15px;
+        }
+      }
+    }
+
+    .friend-checked-panel:hover{
+       background-color: rgba($color: #000000, $alpha: 0.05);
+       
+       .clear-checked-icon{
+         display: block;
+       }
+    }
+
+    .friend-checked-panel {
+      width: 100%;
+      height: 70px;
+      list-style: none;
+      background: #fdfdfd;
+      cursor: default;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .clear-checked-icon{
+         display: none;
+
+         img{
+           width: 18px;
+           height: 18px;
+           margin-left: 4px;
+         }
+      }
+
+      .validate-icon{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        
+        div{
+          img{
+            width: 38px;
+            height: 38px;
+
+          }
+        }
+      }
+
+      .checked-userName{
+        width: 35%;
+        min-width: 75px;
+        height: 40px;
+
+        p:nth-child(1){
+         font-size: 15px;
+         overflow: hidden;
+         white-space: nowrap;
+         text-overflow: ellipsis;
+        }
+
+        p:nth-child(2){
+          color: #7b7b7b;
+          font-size: 12px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          width: 50px;
+        }
+
+      }
+
+      .checked-Time{
+        min-width: 61px;
+        width: 28%;
+        height: 40px;
+        font-size: 13px;
+        color: #7b7b7b;
+        position: relative;
+        right: 3px;
+
+        p{
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        div{
+          width: 18px;
+          height: 18px;
+          border-radius: 10px;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          display: flex;
+          justify-content: center;
+          background: red;
+          color: white;
+        }
+
+        .count-ten{
+          width:25px;
+        }
+        .count-hundred{
+          width:32px;
+        }
+      }
+    }
+
+    .group-panel{
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+
+      .title-panel{
+        width: 90%;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+
+        p{
+          font-size: 12px;
+          color: $fontColor;
+        }
+      }
+
+      // 设备
+      .device-panel{
+        width: 100%;
+        height: 60px;
+        outline: none;
+        user-select: none;
+
+        &:focus{
+          background: $hoverColor;
+        }
+
+        .main-panel{
+          width: 90%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          margin: 0 auto;
+
+          .icon-panel{
+            width: 40px;
+            height: 40px;
+
+            img{
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          .name-panel{
+            cursor: default;
+            margin-left: 8px;
+
+            p{
+              font-size: 15px;
+            }
+          }
+        }
+      }
+
+      .row-panel{
+        width: 100%;
+        height: auto;
+        margin-bottom: 5px;
+        // 禁止选中
+        user-select:none;
+
+        .main-content{
+          width: 90%;
+          height: 25px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+
+          .icon-panel{
+            width: 10%;
+            min-width: 10px;
+            height: 100%;
+
+            img{
+              width: 100%;
+              height: 100%;
+            }
+          }
+
+          .name-panel{
+            width: 80%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            cursor: default;
+
+            p{
+              width:90%;
+              font-size: 15px;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .quantity-panel{
+            width: 10%;
+            height: 100%;
+            min-width: 10px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background: #fff;
+            cursor: default;
+
+            p{
+              color: $fontColor;
+            }
+          }
+        }
+
+        .buddy-panel{
+          width: 100%;
+          height: auto;
+
+          .item-panel{
+            width: 100%;
+            height: 60px;
+            outline: none;
+            margin: 0 auto;
+            &:focus{
+              background: $hoverColor;
+            }
+
+            .main-panel{
+              width: 90%;
+              height: 100%;
+              margin: 0 auto;
+              display: flex;
+              align-items: center;
+              cursor: default;
+
+              .head-img-panel{
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                overflow: hidden;
+
+                img{
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+
+              .nickname-panel{
+                width: 73%;
+                height: 40px;
+                margin-left: 8px;
+
+                .name-panel{
+                  width: 100%;
+                  height: 20px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  font-size: 15px;
+                  line-height: 20px;
+                }
+
+                .signature-panel{
+                  width: 100%;
+                  height: 20px;
+                  line-height: 20px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  font-size: 12px;
+                  color: $listFontColor;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .info-panel{
+    width: 85%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

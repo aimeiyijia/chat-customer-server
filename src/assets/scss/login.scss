@@ -1,0 +1,327 @@
+#login-panel{
+  width: 496px;
+  height: 634px;
+  background: #ffffff;
+  border-radius: 5px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+
+  .top-panel{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .qrCode-panel{
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      right: 7px;
+
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+  /*头像区域*/
+  .headPortrait-panel{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+
+    /*加载层*/
+    .load-panel{
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("../img/login/loading-circle@2x.png");
+
+      img{
+        width: 100%;
+        height: 100%;
+      }
+
+      // 头像旋转动画
+      .avatarRotation{
+        animation: internalAvatar 3s linear;
+        // 动画无限循环
+        animation-iteration-count:infinite;
+      }
+
+      /*头像显示层*/
+      .headPortrait-img-panel{
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: solid 1px #ebeced;
+
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    /*头像显示层*/
+    .headPortrait-img-panel{
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: solid 1px #ebeced;
+      position: relative;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+
+      .cover-panel{
+        width: 150px;
+        height: 150px;
+        background: rgba(0,0,0,.6);
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        input[type="file"]{
+          width: 150px;
+          height: 150px;
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          cursor: pointer;
+        }
+
+        p{
+          color: white;
+          font-size: 20px;
+          font-weight: 600;
+        }
+      }
+    }
+
+    // 外部旋转动画
+    .loadWhirl{
+      animation: externalHalo 3s linear;
+      // 动画无限循环
+      animation-iteration-count:infinite;
+    }
+  }
+
+  /*输入区域*/
+  .inputArea-panel{
+    width: 100%;
+    height: auto;
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .item-panel{
+      width: 85%;
+      height: 80px;
+      border-bottom: solid 1px #ebeced;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+
+      input{
+        width: 90%;
+        height: 50px;
+        border: none;
+        outline: none;
+        font-size: 20px;
+
+        &::placeholder{
+          color: #c9cac6;
+        }
+      }
+
+      .login-btn-panel{
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        right: 0;
+        bottom: 10px;
+
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    /*登录中:用户名显示*/
+    .username-view-panel{
+      width: 100%;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p{
+        font-size: 24px;
+      }
+    }
+
+    /*登录中:取消登录按钮*/
+    .cancel-btn-panel{
+      width: 150px;
+      height: 60px;
+      border: solid 1px #d7d8d8;
+      border-radius: 7px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      color: #424243;
+    }
+  }
+
+  /*注册区域*/
+  .registration-area-panel{
+    width: 100%;
+    height: 40px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    p{
+      color: #666666;
+      font-size: 16px;
+      margin-right: 7%;
+      cursor: pointer;
+
+      &:hover{
+        color: #276ace;
+      }
+    }
+  }
+
+  /*第三方登录*/
+  .auth-panel {
+    width: 85%;
+    height: 40px;
+    margin: 40px auto auto auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .item-panel {
+      width: 40px;
+      height: 40px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+    }
+  }
+
+  // 加载层动画
+  .loading-box{
+    width: 150px;
+    height: 150px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border-top: 10px solid #3888fa;
+    position:relative;
+    animation: a1 2s linear infinite;  //动画名为a1，在下面定义
+    //设置圆角再设置边框就会有弧线的效果
+  }
+  .loading-box:before,.loading-box:after{
+    content: '';
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: 0;
+    top: -10px;   //反复调节得到的数值
+    box-sizing: border-box;
+    border-radius: 50%;
+    //在盒子的左边加两个伪类元素
+  }
+  .loading-box:before{
+    border-top:10px solid #e67e22;
+    transform: rotate(120deg);  //让其中一个伪类元素旋转至右边
+  }
+  .loading-box:after{
+    border-top:10px solid #ff005a;
+    transform: rotate(240deg);  //旋转至左边
+  }
+  .loading-box span{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    color: #000;
+    font-size: 15px;
+    text-align: center;
+    line-height: 150px;
+    animation: a2 2s linear infinite;
+    //给文字也定义一个动画
+  }
+  //让盒子旋转起来
+  @keyframes a1 {
+    to{
+      transform: rotate(360deg)
+    }
+  }
+  //让文字反方向旋转，实现文字不动的效果
+  @keyframes a2 {
+    to{
+      transform: rotate(-360deg)
+    }
+  }
+
+  // 定义外部光环旋转动画
+  @keyframes externalHalo {
+    0%{
+      transform: rotate(0deg);
+    }
+    25%{
+      transform: rotate(90deg);
+    }
+    50%{
+      transform: rotate(180deg);
+    }
+    100%{
+      transform: rotate(360deg);
+    }
+  }
+
+  // 定义内部头像旋转动画
+  @keyframes internalAvatar {
+    0%{
+      transform: rotate(0deg);
+    }
+    25%{
+      transform: rotate(-90deg);
+    }
+    50%{
+      transform: rotate(-180deg);
+    }
+    100%{
+      transform: rotate(-360deg);
+    }
+  }
+}
