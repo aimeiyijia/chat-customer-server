@@ -24,12 +24,18 @@ import { NSpace, NAvatar, NBadge } from "naive-ui";
   flex: 0 0 200px;
 }
 .chat-person_container {
-  background-color: #e8e7e7;
+  background-color: #e6e7e9;
   display: flex;
   align-items: center;
   padding: 10px 12px;
+  cursor: default;
+  &:hover {
+    background-color: #cdcdcd;
+    transition: all 0.2s;
+  }
   .chat-person_desc {
     margin-left: 12px;
+
     .chat-person_nick-name {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -40,6 +46,7 @@ import { NSpace, NAvatar, NBadge } from "naive-ui";
       font-weight: 600;
     }
     .chat-person_last-message {
+      color: #3e3e3e;
     }
   }
 }
