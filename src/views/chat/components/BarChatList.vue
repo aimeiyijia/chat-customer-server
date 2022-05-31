@@ -46,20 +46,22 @@ import { NSpace, NAvatar, NBadge, NInput, NIcon, NScrollbar } from "naive-ui";
 }
 .chat-person_search {
   padding: 10px 12px;
+  background-color: #ebe9e8;
+  border-bottom: 1px solid #cccccc85;
 }
 .chat-person_container {
   height: 100%;
 }
 .chat-person_item {
-  background-color: #fdfdfd;
+  background-color: #ebe9e8;
   display: flex;
   align-items: center;
   padding: 14px 12px;
   cursor: default;
   &:hover {
-    background-color: #eeeeee;
+    background-color: #8f8f8f42;
   }
-  ::v-deep .n-badge-sup {
+  :deep .n-badge-sup {
     left: 86%;
     top: -0.7em;
   }

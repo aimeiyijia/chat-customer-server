@@ -21,7 +21,7 @@ import ChatArea from "./components/ChatArea.vue";
   width: 80%;
   min-width: 600px;
   height: 90%;
-
+  
   box-shadow: 0px 0px 4px #0000004d;
 }
 </style>

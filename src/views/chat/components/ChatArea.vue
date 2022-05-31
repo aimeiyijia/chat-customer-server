@@ -1,14 +1,17 @@
 <template>
-  <div class="chat-area-container">聊天内容展示区</div>
+  <div class="chat-area-container">
+    <messages-container></messages-container>
+  </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import MessagesContainer from './MessagesContainer.vue'
 </script>
 
 <style lang="scss" scoped>
 .chat-area-container {
-  background-color: bisque;
   height: 100%;
   flex: 1 1 auto;
+  background-color: #f5f5f5;
 }
 </style>
