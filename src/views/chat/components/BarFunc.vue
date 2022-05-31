@@ -79,7 +79,7 @@ function handleSetIconActive(type) {
     justify-content: flex-start;
     display: flex;
     flex-direction: column;
-    
+
     .n-badge + .n-badge {
       margin-top: 18px;
     }
