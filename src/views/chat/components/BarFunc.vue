@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive, shallowReactive, markRaw } from "vue";
 import { NIcon, NAvatar, NBadge, NImage } from "naive-ui";
 import {
