@@ -188,7 +188,7 @@ function handleMessageClick() {
       }
 
       .text {
-        background-color: #80b9f2;
+        background-color: #409EFF;
       }
 
       .content {

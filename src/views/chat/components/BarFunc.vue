@@ -3,13 +3,14 @@
     <div class="func_avatar">
       <n-avatar
         color="#000"
+        :size="48"
         src="https://gw.alipayobjects.com/zos/antfincdn/aPkFc8Sj7n/method-draw-image.svg"
         fallback-src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
       />
     </div>
     <div class="func_chat">
       <n-badge
-      color="#fb7299"
+        color="#F56C6C"
         :value="icon.count"
         :max="99"
         v-for="icon in chatIcons"
@@ -18,13 +19,13 @@
         <n-icon
           size="28"
           :component="icon.name"
-          :color="icon.activated ? '#80b9f2' : '#5c5c5c'"
+          :color="icon.activated ? '#409EFF' : '#d9ecff'"
           @click="handleSetIconActive(icon.type)"
         />
       </n-badge>
     </div>
     <div class="func_opera">
-      <n-icon size="30" color="#5c5c5c">
+      <n-icon size="30" color="#ecf5ff">
         <cog-sharp />
       </n-icon>
     </div>
@@ -44,7 +45,7 @@ const chatIcons = reactive([
   {
     name: markRaw(ChatbubblesOutline),
     type: "chat",
-    count: 123,
+    count: 23,
     activated: true,
   },
   { name: markRaw(DocumentAttachOutline), type: "doc", activated: false },
@@ -65,8 +66,8 @@ function handleSetIconActive(type) {
   height: 100%;
   display: flex;
   flex-direction: column;
-  flex: 0 0 80px;
-  background-color: #fff;
+  flex: 0 0 70px;
+  background-color: #000;
   border-right: 1px solid #e0e1e6;
   .func_avatar,
   .func_chat,
@@ -81,6 +82,7 @@ function handleSetIconActive(type) {
     justify-content: flex-start;
     display: flex;
     flex-direction: column;
+    margin-top: 16px;
 
     .n-badge + .n-badge {
       margin-top: 18px;

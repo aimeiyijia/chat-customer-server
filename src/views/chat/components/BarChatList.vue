@@ -17,16 +17,11 @@
           :class="[item === activedChatPerson ? 'actived' : '']"
           @click="handleClickChatPerson(item)"
         >
-          <n-badge color="#fb7299" :value="100" :max="99" processing>
-            <n-avatar
-              round
-              :size="42"
-              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-            />
-            <!-- <template #value>
-              <n-icon :component="LockClosedOutline" />
-            </template> -->
-          </n-badge>
+          <n-avatar
+            round
+            :size="42"
+            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+          />
 
           <div class="chat-person_desc">
             <div class="chat-person_nick-name">
