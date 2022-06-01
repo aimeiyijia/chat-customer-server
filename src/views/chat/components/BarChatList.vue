@@ -13,8 +13,9 @@
         <div class="chat-person_item" v-for="item in 20" :key="item">
           <n-badge :value="100" :max="99" processing>
             <n-avatar
+              round
               :size="42"
-              src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg"
+              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
             />
             <!-- <template #value>
               <n-icon :component="LockClosedOutline" />
@@ -41,25 +42,23 @@ import { NSpace, NAvatar, NBadge, NInput, NIcon, NScrollbar } from "naive-ui";
 <style lang="scss" scoped>
 .bar-chat-list-container {
   height: 100%;
-  flex: 0 0 324px;
+  flex: 0 0 340px;
   overflow: hidden;
 }
 .chat-person_search {
   padding: 10px 12px;
-  background-color: #ebe9e8;
-  border-bottom: 1px solid #cccccc85;
 }
 .chat-person_container {
   height: 100%;
 }
 .chat-person_item {
-  background-color: #ebe9e8;
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   padding: 14px 12px;
   cursor: default;
   &:hover {
-    background-color: #8f8f8f42;
+    background-color: #e4e5e6;
   }
   :deep .n-badge-sup {
     left: 86%;
@@ -76,9 +75,10 @@ import { NSpace, NAvatar, NBadge, NInput, NIcon, NScrollbar } from "naive-ui";
       width: 80%;
       font-size: 16px;
       font-weight: 600;
+      color: #333;
     }
     .chat-person_last-message {
-      color: #3e3e3e;
+      color: #999;
     }
   }
 }

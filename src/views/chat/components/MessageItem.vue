@@ -1,7 +1,8 @@
 <template>
   <div class="message-item-container">
     <div v-if="props.data.position === 'left'" class="message-msg left">
-      <n-avatar shape="square" :size="48" :src="props.data.avatar"></n-avatar>
+      <!-- <n-avatar shape="square" :size="48" :src="props.data.avatar"></n-avatar> -->
+      <n-avatar shape="square" :size="48" src="http://e.hiphotos.baidu.com/image/pic/item/a1ec08fa513d2697e542494057fbb2fb4316d81e.jpg"></n-avatar>
       <div class="main">
         <div class="time">
           <span class="username">{{ props.data.username }}</span>
@@ -33,7 +34,8 @@
           </div>
         </div>
       </div>
-      <n-avatar shape="square" :size="48" :src="imgUrl + props.data.avatar"></n-avatar>
+      <!-- <n-avatar shape="square" :size="48" :src="imgUrl + props.data.avatar"></n-avatar> -->
+      <n-avatar shape="square" :size="48" src="http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg"></n-avatar>
     </div>
   </div>
 </template>
@@ -61,8 +63,8 @@ const imgUrl = ''
 
 <style scoped lang="scss">
 .message-item-container {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .message-msg {
@@ -93,6 +95,7 @@ const imgUrl = ''
     .content {
       // background-color: #f2f5f7;
       // padding: 12px;
+      position: relative;
       border-radius: 4px;
       margin-top: 4px;
 
@@ -100,7 +103,7 @@ const imgUrl = ''
         content: "";
         position: absolute;
         right: 100%;
-        top: 26px;
+        top: 4px;
         width: 0;
         height: 0;
         border-top: 5px solid transparent;
@@ -144,7 +147,14 @@ const imgUrl = ''
     }
 
     .text {
-      background-color: #18a058;
+      color: #333;
+      background-color: #fff;
+    }
+
+    .content {
+      &:before {
+        border-right-color: #fff;
+      }
     }
   }
 
@@ -171,6 +181,7 @@ const imgUrl = ''
           left: 100%;
           right: 0;
           transform: rotateZ(180deg);
+          border-right-color: #2080f0;
         }
       }
     }

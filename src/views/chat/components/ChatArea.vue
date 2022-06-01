@@ -12,6 +12,6 @@ import MessagesContainer from './MessagesContainer.vue'
 .chat-area-container {
   height: 100%;
   flex: 1 1 auto;
-  background-color: #f5f5f5;
+  background-color: #f4f4f8;
 }
 </style>
