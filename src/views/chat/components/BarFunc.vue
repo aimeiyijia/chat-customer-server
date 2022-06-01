@@ -9,21 +9,22 @@
     </div>
     <div class="func_chat">
       <n-badge
+      color="#fb7299"
         :value="icon.count"
         :max="99"
         v-for="icon in chatIcons"
         :key="icon.name"
       >
         <n-icon
-          size="30"
+          size="28"
           :component="icon.name"
-          :color="icon.activated ? '#36ad6a' : '#ffffff'"
+          :color="icon.activated ? '#80b9f2' : '#5c5c5c'"
           @click="handleSetIconActive(icon.type)"
         />
       </n-badge>
     </div>
     <div class="func_opera">
-      <n-icon size="30" color="#ffffff">
+      <n-icon size="30" color="#5c5c5c">
         <cog-sharp />
       </n-icon>
     </div>
@@ -64,8 +65,9 @@ function handleSetIconActive(type) {
   height: 100%;
   display: flex;
   flex-direction: column;
-  flex: 0 0 70px;
-  background-color: #2e2e2e;
+  flex: 0 0 80px;
+  background-color: #fff;
+  border-right: 1px solid #e0e1e6;
   .func_avatar,
   .func_chat,
   .func_opera {

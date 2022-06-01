@@ -1,16 +1,23 @@
 <template>
-  <div class="message-item-container">
+  <div class="message-item-container" @click="handleMessageClick">
     <div v-if="props.data.position === 'left'" class="message-msg left">
       <!-- <n-avatar shape="square" :size="48" :src="props.data.avatar"></n-avatar> -->
-      <n-avatar shape="square" :size="48" src="http://e.hiphotos.baidu.com/image/pic/item/a1ec08fa513d2697e542494057fbb2fb4316d81e.jpg"></n-avatar>
+      <n-avatar
+        shape="square"
+        :size="48"
+        src="http://e.hiphotos.baidu.com/image/pic/item/a1ec08fa513d2697e542494057fbb2fb4316d81e.jpg"
+      ></n-avatar>
       <div class="main">
         <div class="time">
           <span class="username">{{ props.data.username }}</span>
           <span>{{ props.data.time }}</span>
         </div>
         <div class="content">
-          <n-image v-if="props.data.messageType === 'image'" :src="imgUrl + props.data.content"
-            :preview-src-list="[imgUrl + props.data.content]"></n-image>
+          <n-image
+            v-if="props.data.messageType === 'image'"
+            :src="imgUrl + props.data.content"
+            :preview-src-list="[imgUrl + props.data.content]"
+          ></n-image>
           <div class="text" v-else>
             {{ props.data.content }}
           </div>
@@ -27,7 +34,10 @@
         </div>
         <div class="content">
           <div class="image" v-if="props.data.messageType === 'image'">
-            <n-image :src="imgUrl + props.data.content" :preview-src-list="[imgUrl + props.data.content]" />
+            <n-image
+              :src="imgUrl + props.data.content"
+              :preview-src-list="[imgUrl + props.data.content]"
+            />
           </div>
           <div class="text" v-else>
             {{ props.data.content }}
@@ -35,7 +45,11 @@
         </div>
       </div>
       <!-- <n-avatar shape="square" :size="48" :src="imgUrl + props.data.avatar"></n-avatar> -->
-      <n-avatar shape="square" :size="48" src="http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg"></n-avatar>
+      <n-avatar
+        shape="square"
+        :size="48"
+        src="http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg"
+      ></n-avatar>
     </div>
   </div>
 </template>
@@ -44,21 +58,24 @@
 import { reactive, shallowReactive, markRaw, defineProps, PropType } from "vue";
 import { NIcon, NAvatar, NBadge, NImage } from "naive-ui";
 type Message = {
-  position: string
-  avatar: string
-  username: string
-  time: string
-  content: string
-  messageType: string
-}
+  position: string;
+  avatar: string;
+  username: string;
+  time: string;
+  content: string;
+  messageType: string;
+};
 const props = defineProps({
   data: {
     type: Object as PropType<Message>,
     default: () => [],
-    required: true
-  }
-})
-const imgUrl = ''
+    required: true,
+  },
+});
+const imgUrl = "";
+function handleMessageClick() {
+  console.log(props.data);
+}
 </script>
 
 <style scoped lang="scss">
@@ -171,7 +188,7 @@ const imgUrl = ''
       }
 
       .text {
-        background-color: #2080f0;
+        background-color: #80b9f2;
       }
 
       .content {

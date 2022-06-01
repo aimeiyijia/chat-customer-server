@@ -10,8 +10,14 @@
 
     <div class="chat-person_container">
       <n-scrollbar style="height: calc(100% - 54px)">
-        <div class="chat-person_item" v-for="item in 20" :key="item">
-          <n-badge :value="100" :max="99" processing>
+        <div
+          class="chat-person_item"
+          v-for="item in [1, 2, 3, 4]"
+          :key="item"
+          :class="[item === activedChatPerson ? 'actived' : '']"
+          @click="handleClickChatPerson(item)"
+        >
+          <n-badge color="#fb7299" :value="100" :max="99" processing>
             <n-avatar
               round
               :size="42"
@@ -36,7 +42,13 @@
 
 <script setup lang="ts">
 import { Search } from "@vicons/ionicons5";
+import { ref } from "@vue/reactivity";
 import { NSpace, NAvatar, NBadge, NInput, NIcon, NScrollbar } from "naive-ui";
+let activedChatPerson = ref(1);
+function handleClickChatPerson(item) {
+  console.log(item, "点击");
+  activedChatPerson.value = item;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -58,7 +70,10 @@ import { NSpace, NAvatar, NBadge, NInput, NIcon, NScrollbar } from "naive-ui";
   padding: 14px 12px;
   cursor: default;
   &:hover {
-    background-color: #e4e5e6;
+    background-color: #eee;
+  }
+  &.actived {
+    background-color: #e5e5e5;
   }
   :deep .n-badge-sup {
     left: 86%;
