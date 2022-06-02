@@ -1,11 +1,13 @@
 <template>
   <div class="chat-area-container">
+    <chat-person-info></chat-person-info>
     <messages-container></messages-container>
   </div>
 </template>
 
 <script setup lang="ts">
 import MessagesContainer from './MessagesContainer.vue'
+import ChatPersonInfo from './ChatPersonInfo.vue'
 </script>
 
 <style lang="scss" scoped>

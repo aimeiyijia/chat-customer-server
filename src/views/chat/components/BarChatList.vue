@@ -49,8 +49,9 @@ function handleClickChatPerson(item) {
 <style lang="scss" scoped>
 .bar-chat-list-container {
   height: 100%;
-  flex: 0 0 340px;
+  flex: 0 0 320px;
   overflow: hidden;
+  border-right: 1px solid #dadbdf;
 }
 .chat-person_search {
   padding: 10px 12px;
@@ -74,6 +75,10 @@ function handleClickChatPerson(item) {
     left: 86%;
     top: -0.7em;
   }
+  ::v-deep .n-avatar {
+    flex: 0 0 auto;
+  }
+
   .chat-person_desc {
     margin-left: 14px;
 
@@ -82,11 +87,12 @@ function handleClickChatPerson(item) {
       text-overflow: ellipsis;
       word-break: keep-all;
       white-space: nowrap;
-      width: 80%;
+      width: 60%;
       font-size: 16px;
       font-weight: 600;
       color: #333;
     }
+
     .chat-person_last-message {
       color: #999;
     }

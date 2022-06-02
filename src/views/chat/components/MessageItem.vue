@@ -5,7 +5,7 @@
       <n-avatar
         shape="square"
         :size="48"
-        src="http://e.hiphotos.baidu.com/image/pic/item/a1ec08fa513d2697e542494057fbb2fb4316d81e.jpg"
+        src="https://ame.cool/img/logo.png"
       ></n-avatar>
       <div class="main">
         <div class="time">
@@ -48,7 +48,7 @@
       <n-avatar
         shape="square"
         :size="48"
-        src="http://h.hiphotos.baidu.com/image/pic/item/902397dda144ad340668b847d4a20cf430ad851e.jpg"
+        src="https://ame.cool/img/logo.png"
       ></n-avatar>
     </div>
   </div>
@@ -120,7 +120,7 @@ function handleMessageClick() {
         content: "";
         position: absolute;
         right: 100%;
-        top: 4px;
+        top: 3px;
         width: 0;
         height: 0;
         border-top: 5px solid transparent;
@@ -198,7 +198,7 @@ function handleMessageClick() {
           left: 100%;
           right: 0;
           transform: rotateZ(180deg);
-          border-right-color: #2080f0;
+          border-right-color: #409EFF;
         }
       }
     }
