@@ -3,7 +3,6 @@
     <div v-if="props.data.position === 'left'" class="message-msg left">
       <!-- <n-avatar shape="square" :size="48" :src="props.data.avatar"></n-avatar> -->
       <n-avatar
-        shape="square"
         :size="48"
         src="https://ame.cool/img/logo.png"
       ></n-avatar>
@@ -16,7 +15,6 @@
           <n-image
             v-if="props.data.messageType === 'image'"
             :src="imgUrl + props.data.content"
-            :preview-src-list="[imgUrl + props.data.content]"
           ></n-image>
           <div class="text" v-else>
             {{ props.data.content }}
@@ -36,7 +34,6 @@
           <div class="image" v-if="props.data.messageType === 'image'">
             <n-image
               :src="imgUrl + props.data.content"
-              :preview-src-list="[imgUrl + props.data.content]"
             />
           </div>
           <div class="text" v-else>
@@ -46,7 +43,6 @@
       </div>
       <!-- <n-avatar shape="square" :size="48" :src="imgUrl + props.data.avatar"></n-avatar> -->
       <n-avatar
-        shape="square"
         :size="48"
         src="https://ame.cool/img/logo.png"
       ></n-avatar>
@@ -106,7 +102,6 @@ function handleMessageClick() {
       padding: 2px 8px;
       border-radius: 8px;
       margin-right: 4px;
-      color: #409eff;
     }
 
     .content {

@@ -57,5 +57,6 @@ const messageList: Message[] | [] = [
 
 <style lang="scss" scoped>
 .messages-container {
+  height: calc(100% - 248px);
 }
 </style>
