@@ -14,7 +14,6 @@
         :value="icon.count"
         :max="99"
         v-for="icon in chatIcons"
-        :key="icon.name"
       >
         <n-icon
           size="28"
@@ -50,7 +49,7 @@ const chatIcons = reactive([
   },
   { name: markRaw(DocumentAttachOutline), type: "doc", activated: false },
 ]);
-function handleSetIconActive(type) {
+function handleSetIconActive(type: string) {
   for (const icon of chatIcons) {
     console.log(icon);
     icon.activated = false;
