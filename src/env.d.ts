@@ -6,3 +6,8 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+// declare module '@multiavatar/multiavatar/esm' {
+//   import * as multiavatar from '@multiavatar/multiavatar/esm'
+//   export default multiavatar
+// }

@@ -8,6 +8,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@multiavatar/multiavatar": "^1.0.7",
+    "@types/multiavatar__multiavatar": "^1.0.0",
     "@vicons/ionicons5": "^0.12.0",
     "normalize.css": "^8.0.1",
     "vue": "^3.2.25"
