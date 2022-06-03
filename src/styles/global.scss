@@ -1,17 +1,18 @@
 html,
 body,
-#app {
+#app,
+.app-container {
   height: 100%;
-}
-body {
-  background-color: #F8F9FF;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.app-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 300px;
+  background-color: #f8f9ff;
 }
