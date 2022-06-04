@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import ChatContent from "./views/chat/index.vue"
-import { NConfigProvider, GlobalThemeOverrides } from "naive-ui"
-
+import {
+  NConfigProvider,
+  GlobalThemeOverrides,
+  NMessageProvider,
+} from "naive-ui"
+import Layout from "@/views/layout/index.vue"
 const themeOverrides: GlobalThemeOverrides = {
   common: {
     baseColor: "#409EFF",
@@ -15,9 +18,9 @@ const themeOverrides: GlobalThemeOverrides = {
 
 <template>
   <n-config-provider class="app-container" :theme-overrides="themeOverrides">
-  <transition name="fade">
-    <router-view></router-view>
-  </transition>
+    <n-message-provider>
+      <layout></layout>
+    </n-message-provider>
   </n-config-provider>
 </template>
 

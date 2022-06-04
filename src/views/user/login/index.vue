@@ -60,8 +60,12 @@
 <script setup lang="ts">
 import { nextTick, onMounted } from "vue"
 import anime, { AnimeInstance } from "animejs"
+import { useUserStore } from "@/store/index"
 import { useRouter } from "vue-router"
+import { processReturn } from "@/http/utils"
+import { login } from "@/api"
 const router = useRouter()
+const store = useUserStore()
 onMounted(() => {
   nextTick(function () {
     let current: AnimeInstance
@@ -121,12 +125,15 @@ onMounted(() => {
 })
 
 let loginForm = {
-  username: "1",
-  password: "123456",
+  username: "我是客服",
+  password: "1",
+  platform: "server",
 }
 
-function handleLogin() {
+async function handleLogin() {
   console.log(loginForm)
+  await processReturn(login(loginForm))
+  return
   router.push({ name: "Chat" })
 }
 </script>
