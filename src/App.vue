@@ -15,7 +15,9 @@ const themeOverrides: GlobalThemeOverrides = {
 
 <template>
   <n-config-provider class="app-container" :theme-overrides="themeOverrides">
-    <chat-content />
+  <transition name="fade">
+    <router-view></router-view>
+  </transition>
   </n-config-provider>
 </template>
 
@@ -24,5 +26,14 @@ const themeOverrides: GlobalThemeOverrides = {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.8s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

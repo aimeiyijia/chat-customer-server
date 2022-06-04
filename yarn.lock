@@ -32,6 +32,11 @@
   "resolved" "https://registry.npmjs.org/@multiavatar/multiavatar/-/multiavatar-1.0.7.tgz"
   "version" "1.0.7"
 
+"@types/animejs@^3.1.4":
+  "integrity" "sha512-WUjeFT2SXd6intfE6cg6eL1jk/JL88JqM2gC4WqO4iHLmbCvHUq6aoLK13lGpDWs4FtS2PHoYraJZ0dEx99Dyg=="
+  "resolved" "https://registry.npmjs.org/@types/animejs/-/animejs-3.1.4.tgz"
+  "version" "3.1.4"
+
 "@types/jest@^27.0.1":
   "integrity" "sha512-fUy7YRpT+rHXto1YlL+J9rs0uLGyiqVt3ZOTQR+4ROc47yNl8WLdVLgUloBRhOxP1PZvguHl44T3H0wAWxahYQ=="
   "resolved" "https://registry.npmjs.org/@types/jest/-/jest-27.5.1.tgz"
@@ -148,6 +153,11 @@
     "@vue/compiler-dom" "3.2.36"
     "@vue/shared" "3.2.36"
 
+"@vue/devtools-api@^6.0.0", "@vue/devtools-api@^6.1.4":
+  "integrity" "sha512-IiA0SvDrJEgXvVxjNkHPFfDx6SXw0b/TUkqMcDZWNg9fnCAHbTpoo59YfJ9QLFkwa3raau5vSlRVzMSLDnfdtQ=="
+  "resolved" "https://registry.npmjs.org/@vue/devtools-api/-/devtools-api-6.1.4.tgz"
+  "version" "6.1.4"
+
 "@vue/reactivity-transform@3.2.36":
   "integrity" "sha512-Jk5o2BhpODC9XTA7o4EL8hSJ4JyrFWErLtClG3NH8wDS7ri9jBDWxI7/549T7JY9uilKsaNM+4pJASLj5dtRwA=="
   "resolved" "https://registry.npmjs.org/@vue/reactivity-transform/-/reactivity-transform-3.2.36.tgz"
@@ -195,6 +205,11 @@
   "integrity" "sha512-JtB41wXl7Au3+Nl3gD16Cfpj7k/6aCroZ6BbOiCMFCMvrOpkg/qQUXTso2XowaNqBbnkuGHurLAqkLBxNGc1hQ=="
   "resolved" "https://registry.npmjs.org/@vue/shared/-/shared-3.2.36.tgz"
   "version" "3.2.36"
+
+"animejs@^3.2.1":
+  "integrity" "sha512-sWno3ugFryK5nhiDm/2BKeFCpZv7vzerWUcUPyAZLDhMek3+S/p418ldZJbJXo5ZUOpfm2kP2XRO4NJcULMy9A=="
+  "resolved" "https://registry.npmjs.org/animejs/-/animejs-3.2.1.tgz"
+  "version" "3.2.1"
 
 "ansi-regex@^5.0.1":
   "integrity" "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ=="
@@ -515,6 +530,14 @@
   "resolved" "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"
   "version" "2.3.1"
 
+"pinia@^2.0.14":
+  "integrity" "sha512-0nPuZR4TetT/WcLN+feMSjWJku3SQU7dBbXC6uw+R6FLQJCsg+/0pzXyD82T1FmAYe0lsx+jnEDQ1BLgkRKlxA=="
+  "resolved" "https://registry.npmjs.org/pinia/-/pinia-2.0.14.tgz"
+  "version" "2.0.14"
+  dependencies:
+    "@vue/devtools-api" "^6.1.4"
+    "vue-demi" "*"
+
 "postcss@^8.1.10", "postcss@^8.4.13":
   "integrity" "sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig=="
   "resolved" "https://registry.npmjs.org/postcss/-/postcss-8.4.14.tgz"
@@ -616,7 +639,7 @@
   "resolved" "https://registry.npmjs.org/treemate/-/treemate-0.3.11.tgz"
   "version" "0.3.11"
 
-"typescript@*", "typescript@^4.5.4":
+"typescript@*", "typescript@^4.5.4", "typescript@>=4.4.4":
   "integrity" "sha512-Mamb1iX2FDUpcTRzltPxgWMKy3fhg0TN378ylbktPGPK/99KbDtMQ4W1hwgsbPAsG3a0xKa1vmw4VKZQbkvz5A=="
   "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.7.2.tgz"
   "version" "4.7.2"
@@ -647,6 +670,18 @@
   dependencies:
     "evtd" "^0.2.2"
 
+"vue-demi@*":
+  "integrity" "sha512-xmkJ56koG3ptpLnpgmIzk9/4nFf4CqduSJbUM0OdPoU87NwRuZ6x49OLhjSa/fC15fV+5CbEnrxU4oyE022svg=="
+  "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.13.1.tgz"
+  "version" "0.13.1"
+
+"vue-router@^4.0.15":
+  "integrity" "sha512-xa+pIN9ZqORdIW1MkN2+d9Ui2pCM1b/UMgwYUCZOiFYHAvz/slKKBDha8DLrh5aCG/RibtrpyhKjKOZ85tYyWg=="
+  "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-4.0.15.tgz"
+  "version" "4.0.15"
+  dependencies:
+    "@vue/devtools-api" "^6.0.0"
+
 "vue-tsc@^0.34.7":
   "integrity" "sha512-jzUXky44ZLHC4daaJag7FQr3idlPYN719/K1eObGljz5KaS2UnVGTU/XSYCd7d6ampYYg4OsyalbHyJIxV0aEQ=="
   "resolved" "https://registry.npmjs.org/vue-tsc/-/vue-tsc-0.34.17.tgz"
@@ -654,7 +689,7 @@
   dependencies:
     "@volar/vue-typescript" "0.34.17"
 
-"vue@^3.0.0", "vue@^3.0.11", "vue@^3.2.25", "vue@3.2.36":
+"vue@^2.6.14 || ^3.2.0", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.11", "vue@^3.2.0", "vue@^3.2.25", "vue@3.2.36":
   "integrity" "sha512-5yTXmrE6gW8IQgttzHW5bfBiFA6mx35ZXHjGLDmKYzW6MMmYvCwuKybANRepwkMYeXw2v1buGg3/lPICY5YlZw=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.2.36.tgz"
   "version" "3.2.36"

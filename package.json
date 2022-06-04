@@ -1,6 +1,6 @@
 {
-  "name": "my-vue-app",
-  "private": true,
+  "name": "chat-customer-server",
+  "private": false,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -9,12 +9,16 @@
   },
   "dependencies": {
     "@multiavatar/multiavatar": "^1.0.7",
-    "@types/multiavatar__multiavatar": "^1.0.0",
     "@vicons/ionicons5": "^0.12.0",
+    "animejs": "^3.2.1",
     "normalize.css": "^8.0.1",
-    "vue": "^3.2.25"
+    "pinia": "^2.0.14",
+    "vue": "^3.2.25",
+    "vue-router": "^4.0.15"
   },
   "devDependencies": {
+    "@types/animejs": "^3.1.4",
+    "@types/multiavatar__multiavatar": "^1.0.0",
     "@vitejs/plugin-vue": "^2.3.3",
     "naive-ui": "^2.29.0",
     "sass": "^1.52.1",
