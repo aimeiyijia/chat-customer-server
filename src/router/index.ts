@@ -24,7 +24,6 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
-  console.log(to)
   if (!to.name || to.name === "/") {
     return { name: "Login" }
   }

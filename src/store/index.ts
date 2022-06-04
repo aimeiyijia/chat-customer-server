@@ -9,30 +9,35 @@ const defaultUserInfo = {
   tag: "",
   createTime: 0,
 }
+type UserStore = {
+  token: string
+  userInfo: User
+}
 export const useUserStore = defineStore(
   "user",
   () => {
-    let token = ref("")
-    let userInfo = reactive<User>(defaultUserInfo)
+    let user = reactive<UserStore>({
+      token: "",
+      userInfo: defaultUserInfo,
+    })
     // 设置token
     function setToken(tokenVal: string) {
-      token.value = tokenVal
+      user.token = tokenVal
     }
     // 清空token
     function clearToken() {
-      token.value = ""
+      user.token = ""
     }
 
-    function setUserInfo(user: User) {
-      userInfo = user
+    function setUserInfo(val: User) {
+      user.userInfo = val
     }
     function clearUserInfo() {
-      userInfo = defaultUserInfo
+      user.userInfo = defaultUserInfo
     }
 
     return {
-      token,
-      userInfo,
+      user,
       setToken,
       clearToken,
       setUserInfo,

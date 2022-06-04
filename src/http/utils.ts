@@ -7,7 +7,6 @@ export async function processReturn(reqFn: any): Promise<any> {
   const [err, res] = await to<AxiosResponse>(reqFn)
   // code 0:成功 1:错误 2:后端报错
   const { code, msg, data } = res!.data
-  console.log(res, '1234')
   if (code) {
     window.$message.error(msg)
     return

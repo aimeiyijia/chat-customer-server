@@ -2,13 +2,15 @@
   <div class="page">
     <div class="container">
       <div class="left">
-        <div class="login">Server</div>
+        <div class="login" @click="handleChangeLoginType">
+          <n-badge :value="finalLoginType" color="#409EFF"> Server </n-badge>
+        </div>
         <div class="eula">
-          全渠道整合对话
+          <span>全渠道整合对话</span>
           <br />
-          全时段自动接待
+          <span>全时段自动接待</span>
           <br />
-          访客信息获取
+          <span>访客信息获取</span>
         </div>
       </div>
       <div class="right">
@@ -58,14 +60,16 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted } from "vue"
+import { ref, computed, nextTick, onMounted } from "vue"
+import { AddOutline } from "@vicons/ionicons5"
+import { NIcon, NBadge } from "naive-ui"
 import anime, { AnimeInstance } from "animejs"
 import { useUserStore } from "@/store/index"
 import { useRouter } from "vue-router"
 import { processReturn } from "@/http/utils"
 import { login } from "@/api"
 const router = useRouter()
-const store = useUserStore()
+const userStore = useUserStore()
 onMounted(() => {
   nextTick(function () {
     let current: AnimeInstance
@@ -124,6 +128,18 @@ onMounted(() => {
   })
 })
 
+let loginType = ref("login")
+function handleChangeLoginType() {
+  if (loginType.value === "login") {
+    loginType.value = "register"
+  } else {
+    loginType.value = "login"
+  }
+}
+const finalLoginType = computed(() => {
+  return loginType.value === "login" ? "⇋ 登录" : "⇋ 注册"
+})
+
 let loginForm = {
   username: "我是客服",
   password: "1",
@@ -131,8 +147,14 @@ let loginForm = {
 }
 
 async function handleLogin() {
-  console.log(loginForm)
-  await processReturn(login(loginForm))
+  const res = await processReturn(login(loginForm))
+  console.log(res, "返回值")
+  if (res) {
+    const { token, user } = res
+    userStore.setToken(token)
+    userStore.setUserInfo(user)
+    console.log(userStore.user, "状态")
+  }
   return
   router.push({ name: "Chat" })
 }
@@ -151,24 +173,18 @@ async function handleLogin() {
 ::-moz-selection {
   background: #2d2f36;
 }
-body {
-  background: white;
-  font-family: "Inter UI", sans-serif;
-  margin: 0;
-  padding: 20px;
-}
+
 .page {
   background: #e2e2e5;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 40px);
+  height: 100%;
   position: absolute;
   place-content: center;
-  width: calc(100% - 40px);
+  width: 100%;
 }
 @media (max-width: 767px) {
   .page {
-    height: auto;
     margin-bottom: 20px;
     padding-bottom: 20px;
   }
@@ -204,13 +220,18 @@ body {
 .login {
   font-size: 50px;
   font-weight: 900;
-  margin: 50px 40px 40px;
+  margin: 38px 40px 40px;
+  cursor: pointer;
 }
 .eula {
   color: #999;
   font-size: 14px;
   line-height: 1.5;
   margin: 40px;
+  span {
+    display: inline-block;
+    margin: 4px 0;
+  }
 }
 .right {
   background: #474a59;
@@ -253,7 +274,7 @@ input {
   background: transparent;
   border: 0;
   color: #f2f2f2;
-  font-size: 20px;
+  font-size: 18px;
   height: 30px;
   line-height: 30px;
   outline: none !important;
@@ -261,6 +282,11 @@ input {
 }
 input::-moz-focus-inner {
   border: 0;
+}
+
+#username,
+#password {
+  font-size: 14px;
 }
 #submit {
   color: #707075;
