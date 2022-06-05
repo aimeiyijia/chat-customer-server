@@ -12,9 +12,10 @@ class SocketIO {
 
   connectSocket() {
     const UserStore = useUserStore()
-    const { userId } = UserStore.userInfo
+    const { userId } = UserStore.user.userInfo
     const socket: SocketIOClient.Socket = io(`/?userId=${userId}`, {
-      reconnection: true,
+      transports: ['websocket'],
+      reconnection: false,
     })
     socket.on('connect', () => {
       console.log('连接成功')

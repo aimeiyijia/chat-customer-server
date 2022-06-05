@@ -1,76 +1,67 @@
 <template>
-  <div class="message-item-container" @click="handleMessageClick">
-    <div v-if="props.data.position === 'left'" class="message-msg left">
-      <!-- <n-avatar shape="square" :size="48" :src="props.data.avatar"></n-avatar> -->
-      <n-avatar
-        :size="48"
-        src="https://ame.cool/img/logo.png"
-      ></n-avatar>
-      <div class="main">
-        <div class="time">
-          <span class="username">{{ props.data.username }}</span>
-          <span>{{ props.data.time }}</span>
-        </div>
-        <div class="content">
-          <n-image
-            v-if="props.data.messageType === 'image'"
-            :src="imgUrl + props.data.content"
-          ></n-image>
-          <div class="text" v-else>
-            {{ props.data.content }}
-          </div>
+  <div
+    v-if="props.data.position === 'left'"
+    class="message-msg left"
+    @click="handleMessageClick"
+  >
+    <!-- <n-avatar shape="square" :size="48" :src="props.data.avatar"></n-avatar> -->
+    <n-avatar :size="48" src="https://ame.cool/img/logo.png"></n-avatar>
+    <div class="main">
+      <div class="time">
+        <span class="username">{{ props.data.username }}</span>
+        <span>{{ props.data.time }}</span>
+      </div>
+      <div class="content">
+        <n-image
+          v-if="props.data.messageType === 'image'"
+          :src="imgUrl + props.data.content"
+        ></n-image>
+        <div class="text" v-else>
+          {{ props.data.content }}
         </div>
       </div>
     </div>
-    <div v-if="props.data.position === 'center'"></div>
-    <!-- 右侧一定是当前的登录人，所以头像等信息从userInfo中取 -->
-    <div v-if="props.data.position === 'right'" class="message-msg right">
-      <div class="main">
-        <div class="time">
-          <span>{{ props.data.time }}</span>
-          <span class="username">{{ props.data.username }}</span>
+  </div>
+  <div v-if="props.data.position === 'center'"></div>
+
+  <!-- 右侧一定是当前的登录人，所以头像等信息从userInfo中取 -->
+  <div
+    v-if="props.data.position === 'right'"
+    class="message-msg right"
+    @click="handleMessageClick"
+  >
+    <div class="main">
+      <div class="time">
+        <span>{{ props.data.time }}</span>
+        <span class="username">{{ props.data.username }}</span>
+      </div>
+      <div class="content">
+        <div class="image" v-if="props.data.messageType === 'image'">
+          <n-image :src="imgUrl + props.data.content" />
         </div>
-        <div class="content">
-          <div class="image" v-if="props.data.messageType === 'image'">
-            <n-image
-              :src="imgUrl + props.data.content"
-            />
-          </div>
-          <div class="text" v-else>
-            {{ props.data.content }}
-          </div>
+        <div class="text" v-else>
+          {{ props.data.content }}
         </div>
       </div>
-      <!-- <n-avatar shape="square" :size="48" :src="imgUrl + props.data.avatar"></n-avatar> -->
-      <n-avatar
-        :size="48"
-        src="https://ame.cool/img/logo.png"
-      ></n-avatar>
     </div>
+    <!-- <n-avatar shape="square" :size="48" :src="imgUrl + props.data.avatar"></n-avatar> -->
+    <n-avatar :size="48" src="https://ame.cool/img/logo.png"></n-avatar>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, shallowReactive, markRaw, defineProps, PropType } from "vue";
-import { NIcon, NAvatar, NBadge, NImage } from "naive-ui";
-type Message = {
-  position: string;
-  avatar: string;
-  username: string;
-  time: string;
-  content: string;
-  messageType: string;
-};
+import { reactive, shallowReactive, markRaw, defineProps, PropType } from "vue"
+import { NIcon, NAvatar, NBadge, NImage } from "naive-ui"
 const props = defineProps({
   data: {
     type: Object as PropType<Message>,
     default: () => [],
     required: true,
   },
-});
-const imgUrl = "";
+})
+const imgUrl = ""
 function handleMessageClick() {
-  console.log(props.data);
+  console.log(props.data)
 }
 </script>
 
@@ -97,6 +88,7 @@ function handleMessageClick() {
   .main {
     margin-left: 12px;
     position: relative;
+    width: 50%;
 
     .username {
       padding: 2px 8px;
@@ -105,8 +97,6 @@ function handleMessageClick() {
     }
 
     .content {
-      // background-color: #f2f5f7;
-      // padding: 12px;
       position: relative;
       border-radius: 4px;
       margin-top: 4px;
@@ -183,7 +173,7 @@ function handleMessageClick() {
       }
 
       .text {
-        background-color: #409EFF;
+        background-color: #409eff;
       }
 
       .content {
@@ -193,7 +183,7 @@ function handleMessageClick() {
           left: 100%;
           right: 0;
           transform: rotateZ(180deg);
-          border-right-color: #409EFF;
+          border-right-color: #409eff;
         }
       }
     }

@@ -23,17 +23,21 @@ export const useUserStore = defineStore(
     // 设置token
     function setToken(tokenVal: string) {
       user.token = tokenVal
+      cookie.set("token", tokenVal, { expires: 3 })
     }
     // 清空token
     function clearToken() {
       user.token = ""
+      cookie.set("token", "")
     }
 
     function setUserInfo(val: User) {
       user.userInfo = val
+      cookie.set("user", val, { expires: 3650 })
     }
     function clearUserInfo() {
       user.userInfo = defaultUserInfo
+      cookie.set("user", "")
     }
 
     return {

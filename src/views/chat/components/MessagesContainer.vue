@@ -1,58 +1,56 @@
 <template>
   <div class="messages-container">
-    <message-item
-      v-for="item in messageList"
-      :key="item.time"
-      :data="item"
-    ></message-item>
+    <n-scrollbar style="height: 100%">
+      <message-item
+        v-for="item in messageSate.messageList"
+        :key="item.time"
+        :data="item"
+      ></message-item>
+    </n-scrollbar>
   </div>
 </template>
 
 <script setup lang="ts">
-import MessageItem from "./MessageItem.vue";
+import { reactive, computed, watch } from "vue"
+import { NScrollbar } from "naive-ui"
+import MessageItem from "./MessageItem.vue"
+import { useUserStore } from "@/store/index"
+import { useChatStore } from "@/store/chat"
+const userStore = useUserStore()
+const chatStore = useChatStore()
 
-type Message = {
-  position: string;
-  avatar: string;
-  username: string;
-  time: string;
-  content: string;
-  messageType: string;
-};
-const messageList: Message[] | [] = [
-  {
-    position: "left",
-    avatar: "",
-    username: "用户名称",
-    time: "2022-5-31 20:38:59",
-    content: "用户发送的消息",
-    messageType: "text",
-  },
-  {
-    position: "right",
-    avatar: "",
-    username: "用户名称",
-    time: "2022-5-31 20:38:59",
-    content: "客服发送的消息",
-    messageType: "text",
-  },
-  {
-    position: "right",
-    avatar: "",
-    username: "用户名称",
-    time: "2022-5-31 20:38:59",
-    content: "客服发送的消息",
-    messageType: "text",
-  },
-  {
-    position: "right",
-    avatar: "",
-    username: "用户名称",
-    time: "2022-5-31 20:38:59",
-    content: "客服发送的消息",
-    messageType: "text",
-  },
-];
+const messageSate = reactive<{ messageList: Message[] | [] }>({
+  messageList: [],
+})
+
+const chatingPerson = computed(() => {
+  return chatStore.chatingPerson
+})
+
+// let messageList: Message[] | [] = reactive([])
+
+watch(chatingPerson, (newVal) => {
+  if (newVal.messages) {
+    messageSate.messageList = assortByUseId(newVal.messages as Message[])
+  } else {
+    messageSate.messageList = []
+  }
+})
+
+function assortByUseId(userData: Message[]): Message[] {
+  const loginUserId = userStore.user.userInfo.userId
+  return userData.map((o) => {
+    if (o.userId === loginUserId) {
+      Object.assign(o, userStore.user.userInfo)
+      o.position = "right"
+    } else {
+      o.position = "left"
+      Object.assign(o, chatingPerson.value)
+    }
+
+    return o
+  })
+}
 </script>
 
 <style lang="scss" scoped>

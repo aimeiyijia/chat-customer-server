@@ -154,9 +154,8 @@ async function handleLogin() {
     userStore.setToken(token)
     userStore.setUserInfo(user)
     console.log(userStore.user, "状态")
+    router.push({ name: "Chat" })
   }
-  return
-  router.push({ name: "Chat" })
 }
 </script>
 

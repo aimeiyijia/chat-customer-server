@@ -13,17 +13,17 @@ export default defineConfig({
     extensions: [".js", ".json", ".ts"], // 使用路径别名时想要省略的后缀名，可以自己 增减
   },
   server: {
+    port: 2022,
     proxy: {
       "/api": {
         target: Host,
         ws: true,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace("^/api", ""),
       },
-      "socket.io": {
+      "/socket.io": {
         target: Host,
         ws: true,
-        changeOrigin: true,
       },
     },
   },
