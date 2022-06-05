@@ -5,7 +5,10 @@
     @click="handleMessageClick"
   >
     <!-- <n-avatar shape="square" :size="48" :src="props.data.avatar"></n-avatar> -->
-    <n-avatar :size="48" src="https://ame.cool/img/logo.png"></n-avatar>
+    <n-icon size="48">
+      <i v-html="getAvatar(props.data.userId)"></i>
+    </n-icon>
+    <!-- <n-avatar :size="48" src="https://ame.cool/img/logo.png"></n-avatar> -->
     <div class="main">
       <div class="time">
         <span class="username">{{ props.data.username }}</span>
@@ -52,6 +55,7 @@
 <script setup lang="ts">
 import { reactive, shallowReactive, markRaw, defineProps, PropType } from "vue"
 import { NIcon, NAvatar, NBadge, NImage } from "naive-ui"
+import multiavatar from "@multiavatar/multiavatar/esm"
 const props = defineProps({
   data: {
     type: Object as PropType<Message>,
@@ -62,6 +66,9 @@ const props = defineProps({
 const imgUrl = ""
 function handleMessageClick() {
   console.log(props.data)
+}
+function getAvatar(name: any): string {
+  return multiavatar(name)
 }
 </script>
 
