@@ -12,7 +12,7 @@
     <div class="main">
       <div class="time">
         <span class="username">{{ props.data.username }}</span>
-        <span>{{ props.data.time }}</span>
+        <span>{{ getFormatTime(props.data.time) }}</span>
       </div>
       <div class="content">
         <n-image
@@ -35,7 +35,7 @@
   >
     <div class="main">
       <div class="time">
-        <span>{{ props.data.time }}</span>
+        <span>{{ getFormatTime(props.data.time) }}</span>
         <span class="username">{{ props.data.username }}</span>
       </div>
       <div class="content">
@@ -56,6 +56,7 @@
 import { reactive, shallowReactive, markRaw, defineProps, PropType } from "vue"
 import { NIcon, NAvatar, NBadge, NImage } from "naive-ui"
 import multiavatar from "@multiavatar/multiavatar/esm"
+import moment from "dayjs"
 const props = defineProps({
   data: {
     type: Object as PropType<Message>,
@@ -70,6 +71,9 @@ function handleMessageClick() {
 function getAvatar(name: any): string {
   return multiavatar(name)
 }
+function getFormatTime(time) {
+  return moment(time).format("YYYY-MM-DD HH:mm:ss")
+}
 </script>
 
 <style scoped lang="scss">
@@ -81,10 +85,10 @@ function getAvatar(name: any): string {
 .message-msg {
   color: #303133;
   display: flex;
-  margin-top: 24px;
+  margin-top: 18px;
 
-  &:nth-child(1) {
-    margin-top: 0;
+  &:nth-last-child(1) {
+    margin-bottom: 14px;
   }
 
   :deep .el-avatar {
@@ -98,7 +102,7 @@ function getAvatar(name: any): string {
     width: 50%;
 
     .username {
-      padding: 2px 8px;
+      padding: 2px 8px 2px 0px;
       border-radius: 8px;
       margin-right: 4px;
     }
