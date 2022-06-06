@@ -67,7 +67,7 @@ export const useChatStore = defineStore(
     }
 
     function clearChatingPerson() {
-      chat.chatingPerson = defaultChatingPerson
+      chat.chatingPerson = null
     }
     // 如果是当前激活的聊天对象发来的消息，那么直接渲染上屏
     // 如果不是 除上屏外（不可见）还需将未读标志位加一
@@ -82,7 +82,6 @@ export const useChatStore = defineStore(
         return o
       })
       chat.chatPersons = a
-      console.log(chat.chatPersons, "变化")
     }
 
     return {
