@@ -36,6 +36,19 @@ watch(chatingPerson, (newVal) => {
     messageSate.messageList = []
   }
 })
+watch(
+  () => chatStore.chat.chatPersons,
+  (newVal) => {
+    const needRender = newVal.find(
+      (o) => o.userId === chatingPerson.value.userId
+    )
+    if (needRender && needRender.messages) {
+      messageSate.messageList = assortByUseId(needRender.messages as Message[])
+    } else {
+      messageSate.messageList = []
+    }
+  }
+)
 
 function assortByUseId(userData: Message[]): Message[] {
   const loginUserId = userStore.user.userInfo.userId

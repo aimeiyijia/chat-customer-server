@@ -4,7 +4,8 @@ import cloneDeep from "clone-deep"
 
 interface IChatPerson {
   originalChatPersons: Customer[]
-  chatingPerson: Customer
+  chatPersons: Customer[]
+  chatingPerson: Customer | null
 }
 
 const defaultChatingPerson = {
@@ -20,23 +21,20 @@ export const useChatStore = defineStore(
     let chat = reactive<IChatPerson>({
       // 原始的聊天列表
       originalChatPersons: [],
-      chatingPerson: defaultChatingPerson,
-    })
-
-    // const chatingPerson = ref<Customer>(defaultChatingPerson)
-
-    const chatPersons = computed(() => {
-      return processRawChatData(chat.originalChatPersons)
+      chatPersons: [],
+      chatingPerson: null,
     })
 
     watch(
-      chatPersons,
+      () => chat.originalChatPersons,
       (val) => {
-        console.log(val, "更新哈哈哈")
-        chat.chatingPerson = val[0]
+        chat.chatPersons = processRawChatData(val)
+        // 当前聊天的人不存在就默认取聊天列表的第一位
+        if (!chat.chatingPerson) {
+          chat.chatingPerson = chat.chatPersons[0]
+        }
       },
       {
-        immediate: true,
         deep: true,
       }
     )
@@ -60,8 +58,6 @@ export const useChatStore = defineStore(
       chat.originalChatPersons.push(val)
     }
 
-    function updateChatUnread() {}
-
     function clearChatPerson() {
       chat.originalChatPersons = []
     }
@@ -73,18 +69,30 @@ export const useChatStore = defineStore(
     function clearChatingPerson() {
       chat.chatingPerson = defaultChatingPerson
     }
-
-    function updateMessage(val: Message) {}
+    // 如果是当前激活的聊天对象发来的消息，那么直接渲染上屏
+    // 如果不是 除上屏外（不可见）还需将未读标志位加一
+    function updateChatMessage(val: Message) {
+      const a = chat.chatPersons.map((o) => {
+        if (o.userId === val.userId) {
+          o.messages.push(val)
+          if (chat.chatingPerson && chat.chatingPerson.userId !== val.userId) {
+            ;(o.unReadCount as number)++
+          }
+        }
+        return o
+      })
+      chat.chatPersons = a
+      console.log(chat.chatPersons, "变化")
+    }
 
     return {
       chat,
-      chatPersons,
       setChatPersons,
       addChatPerson,
       clearChatPerson,
       setChatingPerson,
       clearChatingPerson,
-      updateMessage,
+      updateChatMessage,
     }
   },
   {

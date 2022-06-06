@@ -32,7 +32,7 @@
               <div class="chat-person_last-message">
                 {{ item.lastMessage ? item.lastMessage.content : "" }}
               </div>
-              <n-badge color="#F56C6C" :value="20" :max="99" />
+              <n-badge color="#F56C6C" :value="item.unReadCount" :max="99" />
             </div>
           </div>
         </div>
@@ -50,7 +50,7 @@ import { useChatStore } from "@/store/chat"
 
 const chatStore = useChatStore()
 const chatPersonList = computed(() => {
-  return chatStore.chatPersons
+  return chatStore.chat.chatPersons
 })
 
 const chatingPerson = computed(() => {

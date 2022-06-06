@@ -50,6 +50,7 @@ function setSocketListener() {
   // 顾客发来的消息
   socket.on("CustomerMessage", (data: any) => {
     console.log(data, "收到消息")
+    chatStore.updateChatMessage(data.data)
   })
 }
 </script>

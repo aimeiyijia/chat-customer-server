@@ -9,7 +9,7 @@ interface Customer {
   avatar?: string
   role: string
   tag?: string
-  messages: Message[] | []
+  messages: Message[] | any[]
   createTime?: number
   lastMessage?: Message | null
   unReadCount?: number
