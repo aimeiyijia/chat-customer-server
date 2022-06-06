@@ -30,8 +30,26 @@ function createSocketConnect() {
 }
 
 function setSocketListener() {
+  // 登录后获取所有的聊天列表
   socket.on("ServerChatData", (data: any) => {
-    chatStore.setChatPersons(data.data.friendData)
+    const friendData = data.data.friendData
+    chatStore.setChatPersons(friendData)
+
+    friendData.forEach((o) => {
+      socket.emit("ReceptionCustomer", {
+        userId: userStore.user.userInfo.userId,
+        friendId: o.userId,
+      })
+    })
+  })
+  // 监听客户分配客服事件，便于重新渲染聊天列表
+  socket.on("AssignServer", (data: any) => {
+    const newCustomer = data.data
+    chatStore.addChatPerson(newCustomer)
+  })
+  // 顾客发来的消息
+  socket.on("CustomerMessage", (data: any) => {
+    console.log(data, "收到消息")
   })
 }
 </script>

@@ -2,7 +2,7 @@ import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
 import { resolve } from "path"
 
-const Host = "http://192.168.3.73:3000"
+const Host = "http://192.168.1.106:3000"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,7 +19,7 @@ export default defineConfig({
         target: Host,
         ws: true,
         changeOrigin: true,
-        rewrite: (path) => path.replace("^/api", ""),
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
       "/socket.io": {
         target: Host,

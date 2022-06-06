@@ -24,7 +24,7 @@ const messageSate = reactive<{ messageList: Message[] | [] }>({
 })
 
 const chatingPerson = computed(() => {
-  return chatStore.chatingPerson
+  return chatStore.chat.chatingPerson
 })
 
 // let messageList: Message[] | [] = reactive([])

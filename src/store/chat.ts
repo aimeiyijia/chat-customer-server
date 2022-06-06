@@ -4,6 +4,7 @@ import cloneDeep from "clone-deep"
 
 interface IChatPerson {
   originalChatPersons: Customer[]
+  chatingPerson: Customer
 }
 
 const defaultChatingPerson = {
@@ -19,9 +20,10 @@ export const useChatStore = defineStore(
     let chat = reactive<IChatPerson>({
       // 原始的聊天列表
       originalChatPersons: [],
+      chatingPerson: defaultChatingPerson,
     })
 
-    const chatingPerson = ref<Customer>(defaultChatingPerson)
+    // const chatingPerson = ref<Customer>(defaultChatingPerson)
 
     const chatPersons = computed(() => {
       return processRawChatData(chat.originalChatPersons)
@@ -31,7 +33,7 @@ export const useChatStore = defineStore(
       chatPersons,
       (val) => {
         console.log(val, "更新哈哈哈")
-        chatingPerson.value = val[0]
+        chat.chatingPerson = val[0]
       },
       {
         immediate: true,
@@ -43,6 +45,7 @@ export const useChatStore = defineStore(
       return cloneDeep(chatData).map((o: Customer): Customer => {
         return {
           ...o,
+          messages: o.messages ? o.messages : [],
           lastMessage: o.messages ? o.messages[o.messages.length - 1] : null,
           unReadCount: 0,
         }
@@ -64,22 +67,24 @@ export const useChatStore = defineStore(
     }
 
     function setChatingPerson(val: Customer) {
-      chatingPerson.value = val
+      chat.chatingPerson = val
     }
 
     function clearChatingPerson() {
-      chatingPerson.value = defaultChatingPerson
+      chat.chatingPerson = defaultChatingPerson
     }
+
+    function updateMessage(val: Message) {}
 
     return {
       chat,
       chatPersons,
-      chatingPerson,
       setChatPersons,
       addChatPerson,
       clearChatPerson,
       setChatingPerson,
       clearChatingPerson,
+      updateMessage,
     }
   },
   {

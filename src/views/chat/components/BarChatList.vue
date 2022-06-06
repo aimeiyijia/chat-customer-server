@@ -54,7 +54,7 @@ const chatPersonList = computed(() => {
 })
 
 const chatingPerson = computed(() => {
-  return chatStore.chatingPerson
+  return chatStore.chat.chatingPerson
 })
 
 function getAvatar(name: any): string {
