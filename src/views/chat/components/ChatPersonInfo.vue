@@ -15,7 +15,7 @@ import { NIcon } from "naive-ui";
 .chat-person-info-container {
   height: 54px;
   background-color: #fff;
-  border-bottom: 1px solid #dadbdf;
+  // border-bottom: 1px solid #dadbdf;
   display: flex;
   justify-content: space-between;
   align-items: center;

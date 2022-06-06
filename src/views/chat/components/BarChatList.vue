@@ -71,10 +71,11 @@ function handleClickChatPerson(item: Customer) {
   flex: 0 0 320px;
   overflow: hidden;
   background-color: #fff;
-  border-right: 1px solid #dadbdf;
+  // border-right: 1px solid #dadbdf;
 }
 .chat-person_search {
   padding: 10px 12px;
+  border-right: 1px solid #dadbdf8a;
 }
 .chat-person_container {
   height: 100%;
