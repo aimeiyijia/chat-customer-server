@@ -20,36 +20,23 @@ export const useChatStore = defineStore(
       chatingPerson: null,
     })
 
-    // watch(
-    //   () => chat.originalChatPersons,
-    //   (val) => {
-    //     chat.chatPersons = processRawChatData(val)
-    //     // 当前聊天的人不存在就默认取聊天列表的第一位
-    //     if (!chat.chatingPerson) {
-    //       chat.chatingPerson = chat.chatPersons[0]
-    //     }
-    //   },
-    //   {
-    //     deep: true,
-    //   }
-    // )
-
     function processRawChatData(chatData: Customer[]): Customer[] {
       return cloneDeep(chatData).map((o: Customer): Customer => {
+        const messsages = o.messages ? assortByUseId(o.messages) : []
         return {
           ...o,
-          messages: o.messages ? o.messages : [],
-          lastMessage: o.messages ? o.messages[o.messages.length - 1] : null,
+          messages: messsages,
+          lastMessage: messsages[messsages.length - 1],
           unReadCount: 0,
         }
       })
     }
 
     // 根据userId归类客户，客服消息
-    function assortByUseId(userData: Message[]): Message[] {
+    function assortByUseId(messageData: Message[]): Message[] {
       const loginUserId = userStore.user.userInfo.userId
       const chatingPerson = chat.chatingPerson
-      return userData.map((o) => {
+      return messageData.map((o) => {
         if (o.userId === loginUserId) {
           Object.assign(o, userStore.user.userInfo)
           o.position = "right"

@@ -83,7 +83,7 @@ function getFormatTime(time) {
 }
 
 .message-msg {
-  color: #303133;
+  color: #999;
   display: flex;
   margin-top: 18px;
 
@@ -160,7 +160,7 @@ function getFormatTime(time) {
     }
 
     .text {
-      color: #333;
+      color: #000;
       background-color: #fff;
     }
 

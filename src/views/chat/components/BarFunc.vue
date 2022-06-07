@@ -18,13 +18,13 @@
         <n-icon
           size="28"
           :component="icon.name"
-          :color="icon.activated ? '#409EFF' : '#d9ecff'"
+          :color="icon.activated ? '#409EFF' : '#ffffffe6'"
           @click="handleSetIconActive(icon.type)"
         />
       </n-badge>
     </div>
     <div class="func_opera">
-      <n-icon size="30" color="#ecf5ff">
+      <n-icon size="30" color="#ffffffe6">
         <cog-sharp />
       </n-icon>
     </div>
