@@ -23,25 +23,6 @@ const messageSate = reactive<{ messageList: Message[] | [] }>({
   messageList: [],
 })
 
-// watch(
-//   () => chatStore.chat,
-//   (newVal) => {
-//     console.log(newVal, "567890")
-//     const { chatingPerson, chatPersons } = newVal
-//     const needRender = chatPersons.find(
-//       (o) => o.userId === chatingPerson.userId
-//     )
-//     console.log(needRender, "123")
-//     if (needRender && needRender.messages) {
-//       messageSate.messageList = assortByUseId(needRender.messages as Message[])
-//     } else {
-//       messageSate.messageList = []
-//     }
-//   },
-//   {
-//     deep: true,
-//   }
-// )
 watchEffect(() => {
   let chatingPerson = chatStore.chat.chatingPerson
   let chatPersons = chatStore.chat.chatPersons
@@ -49,32 +30,12 @@ watchEffect(() => {
     const needRender = chatPersons.find(
       (o) => o.userId === chatingPerson.userId
     )
-    console.log(needRender, "123")
     if (needRender && needRender.messages) {
       messageSate.messageList = assortByUseId(needRender.messages as Message[])
     } else {
       messageSate.messageList = []
     }
 })
-// watch(
-//   () => [chatStore.chat.chatPersons, chatStore.chat.chatingPerson],
-//   ([chatPersons, chatingPerson]) => {
-//     console.log(chatPersons, "1")
-//     console.log(chatingPerson, "2")
-//     const needRender = chatPersons.find(
-//       (o) => o.userId === chatingPerson.userId
-//     )
-//     console.log(needRender, "123")
-//     if (needRender && needRender.messages) {
-//       messageSate.messageList = assortByUseId(needRender.messages as Message[])
-//     } else {
-//       messageSate.messageList = []
-//     }
-//   },
-//   {
-//     deep: true,
-//   }
-// )
 
 function assortByUseId(userData: Message[]): Message[] {
   const loginUserId = userStore.user.userInfo.userId
@@ -87,7 +48,6 @@ function assortByUseId(userData: Message[]): Message[] {
       o.position = "left"
       Object.assign(o, chatingPerson)
     }
-
     return o
   })
 }

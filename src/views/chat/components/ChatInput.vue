@@ -25,11 +25,30 @@
 import { ref, markRaw } from "vue"
 import { FolderOutline } from "@vicons/ionicons5"
 import { NInput, NButton, NIcon } from "naive-ui"
+import socketIo from "@/socket"
+import { useUserStore } from "@/store/index"
+import { useChatStore } from "@/store/chat"
+const userStore = useUserStore()
+const chatStore = useChatStore()
 const emits = defineEmits(["send"])
 let message = ref("")
 const operaIcons = [{ name: FolderOutline }]
 function handleSend() {
   emits("send", message.value)
+  const { userInfo } = userStore.user
+  const userMessage = {
+    userId: userInfo.userId,
+    friendId: chatStore.chat.chatingPerson.userId,
+    sendRole: "server",
+    content: message.value,
+    messageType: "text",
+    time: new Date().valueOf(),
+  }
+  console.log(userMessage, "消息")
+
+  console.log(socketIo, 'hahha')
+
+  socketIo._socket.emit("CustomerMessage", userMessage)
 }
 </script>
 

@@ -46,6 +46,11 @@ function setSocketListener() {
   socket.on("AssignServer", (data: any) => {
     const newCustomer = data.data
     chatStore.addChatPerson(newCustomer)
+
+    this.socket.emit("ReceptionCustomer", {
+      userId: userStore.user.userInfo.userId,
+      friendId: newCustomer.userId,
+    })
   })
   // 顾客发来的消息
   socket.on("CustomerMessage", (data: any) => {

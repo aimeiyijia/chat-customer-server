@@ -50,6 +50,7 @@ import { useChatStore } from "@/store/chat"
 
 const chatStore = useChatStore()
 const chatPersonList = computed(() => {
+  console.log(1234)
   return chatStore.chat.chatPersons
 })
 

@@ -5,9 +5,11 @@ import { EventEmitter } from 'events'
 class SocketIO {
   // private socket: SocketIOClient.Socket
   public _event: any
+  public _socket: any
   public static instance: SocketIO
   constructor() {
     this._event = new EventEmitter()
+    this._socket = null
   }
 
   connectSocket() {
@@ -38,6 +40,7 @@ class SocketIO {
     socket.on('reconnecting', (error: Error) => {
       console.error('正在重连', error)
     })
+    this._socket = socket
     return socket
   }
 
