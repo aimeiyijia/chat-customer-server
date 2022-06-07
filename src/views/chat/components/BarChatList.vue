@@ -109,6 +109,9 @@ function handleClickChatPerson(item: Customer) {
       justify-content: space-between;
       align-items: flex-start;
     }
+    .bottom {
+      height: 22px;
+    }
     .chat-person_nick-name,
     .chat-person_last-message {
       width: 204px;
