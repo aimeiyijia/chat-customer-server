@@ -5,7 +5,6 @@ import cloneDeep from "clone-deep"
 import { useUserStore } from "@/store/index"
 const userStore = useUserStore()
 interface IChatPerson {
-  originalChatPersons: Customer[]
   chatPersons: Customer[]
   chatingPerson: Customer | null
 }
@@ -14,8 +13,6 @@ export const useChatStore = defineStore(
   "chat",
   () => {
     let chat = reactive<IChatPerson>({
-      // 原始的聊天列表
-      originalChatPersons: [],
       chatPersons: [],
       chatingPerson: null,
     })
@@ -49,30 +46,35 @@ export const useChatStore = defineStore(
     }
 
     function setChatPersons(val: Customer[]) {
-      // chat.originalChatPersons = val
       chat.chatPersons = processRawChatData(val)
       if (!chat.chatingPerson) {
         chat.chatingPerson = chat.chatPersons[0]
       }
+      console.log("人员初始化")
     }
 
     function addChatPerson(val: Customer) {
       // 数据量少的时候性能差距不大，第二种方式更简洁一些
       // chat.chatPersons = chat.chatPersons.concat(processRawChatData([val]))
       chat.chatPersons = [...chat.chatPersons, ...processRawChatData([val])]
+      console.log("人员新增")
     }
 
     // 如果是当前激活的聊天对象发来的消息，那么直接渲染上屏
     // 如果不是 除上屏外（不可见）还需将未读标志位加一
     function updateChatMessage(val: Message) {
+      const assortVal = assortByUseId([val])[0]
       const a = chat.chatPersons.map((o) => {
-        if (o.chatUserId === val.chatUserId || o.chatUserId === val.friendId) {
-          o.messages.push(val)
-          o.lastMessage = val
+        if (
+          o.chatUserId === assortVal.chatUserId ||
+          o.chatUserId === assortVal.chatUserFriendId
+        ) {
+          o.messages.push(assortVal)
+          o.lastMessage = assortVal
           if (
             chat.chatingPerson &&
-            chat.chatingPerson.chatUserId !== val.chatUserId &&
-            chat.chatingPerson.chatUserId !== val.friendId
+            chat.chatingPerson.chatUserId !== assortVal.chatUserId &&
+            chat.chatingPerson.chatUserId !== assortVal.chatUserFriendId
           ) {
             ;(o.unReadCount as number)++
           }
@@ -80,13 +82,15 @@ export const useChatStore = defineStore(
         return o
       })
       chat.chatPersons = a
+      console.log("新人")
     }
 
     function clearChatPerson() {
-      chat.originalChatPersons = []
+      chat.chatPersons = []
     }
 
     function setChatingPerson(val: Customer) {
+      console.log("设置聊天的人")
       chat.chatingPerson = val
     }
 

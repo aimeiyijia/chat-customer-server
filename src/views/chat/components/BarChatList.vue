@@ -14,7 +14,7 @@
           class="chat-person_item"
           v-for="item in chatPersonList"
           :key="item.chatUserId"
-          :class="[item.chatUserId === chatingPerson.chatUserId ? 'actived' : '']"
+          :class="[item.chatUserId === chatingPerson!.chatUserId ? 'actived' : '']"
           @click="handleClickChatPerson(item)"
         >
           <n-icon size="42">
@@ -50,11 +50,11 @@ import { useChatStore } from "@/store/chat"
 
 const chatStore = useChatStore()
 const chatPersonList = computed(() => {
-  console.log(1234)
   return chatStore.chat.chatPersons
 })
 
 const chatingPerson = computed(() => {
+  console.log('列表变化')
   return chatStore.chat.chatingPerson
 })
 

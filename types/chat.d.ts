@@ -17,14 +17,14 @@ interface Customer {
 
 // 用户与好友关联表
 interface UserMap {
-  friendId: string
+  chatUserFriendId: string
   chatUserId: string
 }
 
 // 好友消息
 interface Message {
   chatUserId: string
-  friendId: string
+  chatUserFriendId: string
   content: string
   messageType: MessageType
   time: number
@@ -77,7 +77,7 @@ interface UnReadGather {
 interface PagingParams {
   groupId?: string
   chatUserId?: string
-  friendId?: string
+  chatUserFriendId?: string
   current: number
   pageSize: number
 }

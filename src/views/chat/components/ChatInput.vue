@@ -38,15 +38,16 @@ function handleSend() {
   const { userInfo } = userStore.user
   const userMessage = {
     chatUserId: userInfo.chatUserId,
-    friendId: chatStore.chat.chatingPerson.chatUserId,
+    chatUserFriendId: chatStore.chat.chatingPerson!.chatUserId,
     sendRole: "server",
     content: message.value,
     messageType: "text",
     time: new Date().valueOf(),
+    token: userStore.user.token,
   }
   console.log(userMessage, "消息")
 
-  console.log(socketIo, 'hahha')
+  console.log(socketIo, "hahha")
 
   socketIo._socket.emit("CustomerMessage", userMessage)
 }

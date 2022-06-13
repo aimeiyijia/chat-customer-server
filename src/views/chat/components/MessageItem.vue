@@ -71,7 +71,7 @@ function handleMessageClick() {
 function getAvatar(name: any): string {
   return multiavatar(name)
 }
-function getFormatTime(time) {
+function getFormatTime(time: number) {
   return moment(time).format("YYYY-MM-DD HH:mm:ss")
 }
 </script>

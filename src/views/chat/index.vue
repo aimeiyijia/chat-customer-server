@@ -37,10 +37,10 @@ function setSocketListener() {
     const friendData = data.data.friendData
     chatStore.setChatPersons(friendData)
 
-    friendData.forEach((o) => {
+    friendData.forEach((o: User) => {
       socket.emit("ReceptionCustomer", {
         chatUserId: userStore.user.userInfo.chatUserId,
-        friendId: o.chatUserId,
+        chatUserFriendId: o.chatUserId,
       })
     })
   })
@@ -50,9 +50,9 @@ function setSocketListener() {
     const newCustomer = data.data
     chatStore.addChatPerson(newCustomer)
 
-    this.socket.emit("ReceptionCustomer", {
+    socket.emit("ReceptionCustomer", {
       chatUserId: userStore.user.userInfo.chatUserId,
-      friendId: newCustomer.chatUserId,
+      chatUserFriendId: newCustomer.chatUserId,
     })
   })
   // 顾客发来的消息
