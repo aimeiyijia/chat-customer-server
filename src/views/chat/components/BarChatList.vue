@@ -13,12 +13,12 @@
         <div
           class="chat-person_item"
           v-for="item in chatPersonList"
-          :key="item.userId"
-          :class="[item.userId === chatingPerson.userId ? 'actived' : '']"
+          :key="item.chatUserId"
+          :class="[item.chatUserId === chatingPerson.chatUserId ? 'actived' : '']"
           @click="handleClickChatPerson(item)"
         >
           <n-icon size="42">
-            <i v-html="getAvatar(item.userId)"></i>
+            <i v-html="getAvatar(item.chatUserId)"></i>
           </n-icon>
 
           <div class="chat-person_desc">

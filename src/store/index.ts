@@ -2,7 +2,7 @@ import { ref, reactive } from "vue"
 import { defineStore } from "pinia"
 import cookie from "js-cookie"
 const defaultUserInfo = {
-  userId: "",
+  chatUserId: "",
   username: "",
   avatar: "",
   role: "",

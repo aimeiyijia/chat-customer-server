@@ -6,7 +6,7 @@
   >
     <!-- <n-avatar shape="square" :size="48" :src="props.data.avatar"></n-avatar> -->
     <n-icon size="48">
-      <i v-html="getAvatar(props.data.userId)"></i>
+      <i v-html="getAvatar(props.data.chatUserId)"></i>
     </n-icon>
     <!-- <n-avatar :size="48" src="https://ame.cool/img/logo.png"></n-avatar> -->
     <div class="main">

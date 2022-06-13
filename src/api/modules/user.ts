@@ -5,7 +5,7 @@ import fetch from '@/http';
  * @param params
  */
  export const register = (params: User) => {
-  return fetch.post(`/auth/register`, {
+  return fetch.post(`/broke/chatUser/register`, {
     ...params,
   });
 };
@@ -14,7 +14,7 @@ import fetch from '@/http';
  * @param params
  */
  export const login = (params: any) => {
-  return fetch.post(`/auth/login`, {
+  return fetch.post(`/broke/chatUser/login`, {
     ...params,
   });
 };

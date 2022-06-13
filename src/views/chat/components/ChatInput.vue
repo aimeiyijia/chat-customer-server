@@ -37,8 +37,8 @@ function handleSend() {
   emits("send", message.value)
   const { userInfo } = userStore.user
   const userMessage = {
-    userId: userInfo.userId,
-    friendId: chatStore.chat.chatingPerson.userId,
+    chatUserId: userInfo.chatUserId,
+    friendId: chatStore.chat.chatingPerson.chatUserId,
     sendRole: "server",
     content: message.value,
     messageType: "text",

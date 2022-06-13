@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue"
+import { toRaw, onMounted } from "vue"
 import socketIo from "@/socket"
 import BarFunc from "./components/BarFunc.vue"
 import BarChatList from "./components/BarChatList.vue"
@@ -25,31 +25,34 @@ function createSocketConnect() {
   socket = socketIo.connectSocket()
   setSocketListener()
 
+  console.log(toRaw(userStore.user.userInfo), '用户信息')
   // 获取客户原来的咨询信息
-  socket.emit("ServerChatData", userStore.user.userInfo)
+  socket.emit("ServerChatData", toRaw(userStore.user.userInfo))
 }
 
 function setSocketListener() {
   // 登录后获取所有的聊天列表
   socket.on("ServerChatData", (data: any) => {
+    console.log(data, '历史接待数据')
     const friendData = data.data.friendData
     chatStore.setChatPersons(friendData)
 
     friendData.forEach((o) => {
       socket.emit("ReceptionCustomer", {
-        userId: userStore.user.userInfo.userId,
-        friendId: o.userId,
+        chatUserId: userStore.user.userInfo.chatUserId,
+        friendId: o.chatUserId,
       })
     })
   })
   // 监听客户分配客服事件，便于重新渲染聊天列表
   socket.on("AssignServer", (data: any) => {
+    console.log(data, '分配客服')
     const newCustomer = data.data
     chatStore.addChatPerson(newCustomer)
 
     this.socket.emit("ReceptionCustomer", {
-      userId: userStore.user.userInfo.userId,
-      friendId: newCustomer.userId,
+      chatUserId: userStore.user.userInfo.chatUserId,
+      friendId: newCustomer.chatUserId,
     })
   })
   // 顾客发来的消息

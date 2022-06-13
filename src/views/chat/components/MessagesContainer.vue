@@ -26,7 +26,7 @@ const messageState = reactive<{ messageList: Message[] | [] }>({
 watchEffect(() => {
   let chatingPerson = chatStore.chat.chatingPerson
   let chatPersons = chatStore.chat.chatPersons
-  const needRender = chatPersons.find((o) => o.userId === chatingPerson.userId)
+  const needRender = chatPersons.find((o) => o.chatUserId === chatingPerson.chatUserId)
   if (needRender && needRender.messages) {
     messageState.messageList = needRender.messages
   } else {

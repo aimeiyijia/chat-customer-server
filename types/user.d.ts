@@ -1,5 +1,5 @@
 interface User {
-  userId: string;
+  chatUserId: string;
   username: string;
   avatar: string;
   role?: string;

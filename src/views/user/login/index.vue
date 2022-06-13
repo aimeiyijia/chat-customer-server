@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted } from "vue"
+import { ref, computed,reactive, nextTick, onMounted } from "vue"
 import { AddOutline } from "@vicons/ionicons5"
 import { NIcon, NBadge } from "naive-ui"
 import anime, { AnimeInstance } from "animejs"
@@ -140,11 +140,11 @@ const finalLoginType = computed(() => {
   return loginType.value === "login" ? "⇋ 登录" : "⇋ 注册"
 })
 
-let loginForm = {
-  username: "我是客服",
-  password: "1",
+let loginForm = reactive({
+  username: "客服1",
+  password: "123",
   platform: "server",
-}
+})
 
 async function handleLogin() {
   const res = await processReturn(login(loginForm))

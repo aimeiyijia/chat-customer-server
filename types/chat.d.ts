@@ -1,10 +1,10 @@
 // 所有好友的好友信息
 interface FriendGather {
-  [userId: string]: Customer
+  [chatUserId: string]: Customer
 }
 
 interface Customer {
-  userId: string
+  chatUserId: string
   username: string
   avatar?: string
   role: string
@@ -18,12 +18,12 @@ interface Customer {
 // 用户与好友关联表
 interface UserMap {
   friendId: string
-  userId: string
+  chatUserId: string
 }
 
 // 好友消息
 interface Message {
-  userId: string
+  chatUserId: string
   friendId: string
   content: string
   messageType: MessageType
@@ -76,7 +76,7 @@ interface UnReadGather {
 // 获取群分页消息参数
 interface PagingParams {
   groupId?: string
-  userId?: string
+  chatUserId?: string
   friendId?: string
   current: number
   pageSize: number

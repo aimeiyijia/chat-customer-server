@@ -32,12 +32,12 @@ export const useChatStore = defineStore(
       })
     }
 
-    // 根据userId归类客户，客服消息
+    // 根据chatUserId归类客户，客服消息
     function assortByUseId(messageData: Message[]): Message[] {
-      const loginUserId = userStore.user.userInfo.userId
+      const loginchatUserId = userStore.user.userInfo.chatUserId
       const chatingPerson = chat.chatingPerson
       return messageData.map((o) => {
-        if (o.userId === loginUserId) {
+        if (o.chatUserId === loginchatUserId) {
           Object.assign(o, userStore.user.userInfo)
           o.position = "right"
         } else {
@@ -66,13 +66,13 @@ export const useChatStore = defineStore(
     // 如果不是 除上屏外（不可见）还需将未读标志位加一
     function updateChatMessage(val: Message) {
       const a = chat.chatPersons.map((o) => {
-        if (o.userId === val.userId || o.userId === val.friendId) {
+        if (o.chatUserId === val.chatUserId || o.chatUserId === val.friendId) {
           o.messages.push(val)
           o.lastMessage = val
           if (
             chat.chatingPerson &&
-            chat.chatingPerson.userId !== val.userId &&
-            chat.chatingPerson.userId !== val.friendId
+            chat.chatingPerson.chatUserId !== val.chatUserId &&
+            chat.chatingPerson.chatUserId !== val.friendId
           ) {
             ;(o.unReadCount as number)++
           }
