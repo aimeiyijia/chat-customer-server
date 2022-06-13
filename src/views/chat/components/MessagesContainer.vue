@@ -21,6 +21,7 @@ import {
   nextTick,
 } from "vue"
 import { NScrollbar } from "naive-ui"
+import cloneDeep from "clone-deep"
 import MessageItem from "./MessageItem.vue"
 import { useUserStore } from "@/store/index"
 import { useChatStore } from "@/store/chat"
@@ -35,14 +36,13 @@ const messageState = reactive<{ messageList: Message[] | [] }>({
 
 watchEffect(() => {
   let chatingPerson = chatStore.chat.chatingPerson
-  console.log("当前接待的客户变化", chatingPerson)
   let chatPersons = chatStore.chat.chatPersons
   const needRender = chatPersons.find(
     (o) => o.chatUserId === chatingPerson!.chatUserId
   )
   if (needRender && needRender.messages) {
-    console.log(needRender.messages, "需要被渲染的消息")
     messageState.messageList = assortByUseId(needRender.messages)
+    console.log(messageState.messageList, "最终被渲染的消息")
   } else {
     messageState.messageList = []
   }
@@ -54,7 +54,7 @@ watchEffect(() => {
 function assortByUseId(messageData: Message[]): Message[] {
   const loginchatUserId = userStore.user.userInfo.chatUserId
   const chatingPerson = chatStore.chat.chatingPerson
-  return messageData.map((o) => {
+  return cloneDeep(messageData).map((o) => {
     if (o.chatUserId === loginchatUserId) {
       Object.assign(o, userStore.user.userInfo)
       o.position = "right"

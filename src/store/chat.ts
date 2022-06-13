@@ -1,12 +1,13 @@
 import { computed, watch, ref, reactive } from "vue"
 import { defineStore } from "pinia"
 import cloneDeep from "clone-deep"
+import omit from "object.omit"
 
 import { useUserStore } from "@/store/index"
 const userStore = useUserStore()
 interface IChatPerson {
   chatPersons: Customer[]
-  chatingPerson: Customer | null
+  chatingPerson: Omit<Customer, "messages" | "lastMessage"> | null
 }
 
 export const useChatStore = defineStore(
@@ -23,7 +24,6 @@ export const useChatStore = defineStore(
         return {
           ...o,
           messages: messsages,
-          lastMessage: messsages[messsages.length - 1],
           unReadCount: 0,
         }
       })
@@ -54,7 +54,6 @@ export const useChatStore = defineStore(
           o.chatUserId === assortVal.chatUserFriendId
         ) {
           o.messages.push(assortVal)
-          o.lastMessage = assortVal
           if (
             chat.chatingPerson &&
             chat.chatingPerson.chatUserId !== assortVal.chatUserId &&
@@ -74,8 +73,8 @@ export const useChatStore = defineStore(
     }
 
     function setChatingPerson(val: Customer) {
-      console.log("设置聊天的人", val)
-      chat.chatingPerson = val
+      console.log("设置聊天的人", omit(val, ["messages", "lastMessage"]))
+      chat.chatingPerson = omit(val, ["messages", "lastMessage"])
     }
 
     function clearChatingPerson() {
