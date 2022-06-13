@@ -19,7 +19,7 @@ export const useChatStore = defineStore(
 
     function processRawChatData(chatData: Customer[]): Customer[] {
       return cloneDeep(chatData).map((o: Customer): Customer => {
-        const messsages = o.messages ? assortByUseId(o.messages) : []
+        const messsages = o.messages ? o.messages : []
         return {
           ...o,
           messages: messsages,
@@ -29,28 +29,12 @@ export const useChatStore = defineStore(
       })
     }
 
-    // 根据chatUserId归类客户，客服消息
-    function assortByUseId(messageData: Message[]): Message[] {
-      const loginchatUserId = userStore.user.userInfo.chatUserId
-      const chatingPerson = chat.chatingPerson
-      return messageData.map((o) => {
-        if (o.chatUserId === loginchatUserId) {
-          Object.assign(o, userStore.user.userInfo)
-          o.position = "right"
-        } else {
-          o.position = "left"
-          Object.assign(o, chatingPerson)
-        }
-        return o
-      })
-    }
-
     function setChatPersons(val: Customer[]) {
       chat.chatPersons = processRawChatData(val)
       if (!chat.chatingPerson) {
         chat.chatingPerson = chat.chatPersons[0]
       }
-      console.log("人员初始化")
+      console.log("人员初始化", chat.chatPersons)
     }
 
     function addChatPerson(val: Customer) {
@@ -63,7 +47,7 @@ export const useChatStore = defineStore(
     // 如果是当前激活的聊天对象发来的消息，那么直接渲染上屏
     // 如果不是 除上屏外（不可见）还需将未读标志位加一
     function updateChatMessage(val: Message) {
-      const assortVal = assortByUseId([val])[0]
+      const assortVal = val
       const a = chat.chatPersons.map((o) => {
         if (
           o.chatUserId === assortVal.chatUserId ||
@@ -90,7 +74,7 @@ export const useChatStore = defineStore(
     }
 
     function setChatingPerson(val: Customer) {
-      console.log("设置聊天的人")
+      console.log("设置聊天的人", val)
       chat.chatingPerson = val
     }
 

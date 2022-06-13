@@ -35,18 +35,36 @@ const messageState = reactive<{ messageList: Message[] | [] }>({
 
 watchEffect(() => {
   let chatingPerson = chatStore.chat.chatingPerson
+  console.log("当前接待的客户变化", chatingPerson)
   let chatPersons = chatStore.chat.chatPersons
   const needRender = chatPersons.find(
     (o) => o.chatUserId === chatingPerson!.chatUserId
   )
   if (needRender && needRender.messages) {
-    messageState.messageList = needRender.messages
+    console.log(needRender.messages, "需要被渲染的消息")
+    messageState.messageList = assortByUseId(needRender.messages)
   } else {
     messageState.messageList = []
   }
+  console.log("当前接待的客户变化1234567", chatingPerson)
   setScrollToBottom()
-  console.log("当前接待的客户变化", chatingPerson)
 })
+
+// 根据chatUserId归类客户，客服消息
+function assortByUseId(messageData: Message[]): Message[] {
+  const loginchatUserId = userStore.user.userInfo.chatUserId
+  const chatingPerson = chatStore.chat.chatingPerson
+  return messageData.map((o) => {
+    if (o.chatUserId === loginchatUserId) {
+      Object.assign(o, userStore.user.userInfo)
+      o.position = "right"
+    } else {
+      o.position = "left"
+      Object.assign(o, chatingPerson)
+    }
+    return o
+  })
+}
 
 function setScrollToBottom() {
   nextTick(function () {
