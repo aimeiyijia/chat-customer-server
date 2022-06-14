@@ -16,3 +16,42 @@ body,
   align-items: center;
   min-height: 300px;
 }
+
+.send-before-confirm.n-dialog.n-modal {
+  width: 70%;
+  .n-button {
+    &:nth-of-type(1) {
+      color: #000;
+    }
+    &:nth-of-type(2) {
+      color: #fff;
+    }
+  }
+}
+
+.file-list-in-dialog {
+  background-color: #fff;
+  padding: 24px;
+
+  .single-file {
+    width: 220px;
+    height: 220px;
+    border: 1px solid #f0f0f0;
+    padding: 12px;
+    border-radius: 4px;
+
+    .n-image img {
+      width: 100%;
+      height: 200px;
+    }
+
+    .n-badge .n-badge-sup {
+      height: 22px;
+      cursor: pointer;
+
+      .n-icon + .n-icon {
+        margin-left: 8px;
+      }
+    }
+  }
+}
