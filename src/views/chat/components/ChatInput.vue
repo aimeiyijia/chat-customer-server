@@ -24,6 +24,7 @@
         negative-text="取消发送"
         :close-on-esc="false"
         :mask-closable="false"
+        @positive-click="handleAfterRead"
       >
         <template #header>
           <div>发送前的操作</div>
@@ -73,6 +74,8 @@
 
 <script setup lang="ts">
 import { ref, markRaw, reactive } from "vue"
+import to from "await-to-js"
+import base64 from "base-64"
 import {
   FolderOutline,
   CloseCircleOutline,
@@ -91,6 +94,8 @@ import {
   useMessage,
   UploadCustomRequestOptions,
 } from "naive-ui"
+import { httpUploadFile } from "@/api"
+import { uuid, getFileType } from "@/utils"
 import socketIo from "@/socket"
 import { useUserStore } from "@/store/index"
 import { useChatStore } from "@/store/chat"
@@ -104,9 +109,17 @@ type ShowFiles = {
   type: string
   src: string
   show: boolean
+  file: File
 }
 let showFiles = reactive<ShowFiles[]>([])
-let showFileEditModal = reactive<Boolean>(true)
+let showFileEditModal = ref(false)
+
+function handleShowBadge(hoverItem: ShowFiles) {
+  hoverItem.show = true
+}
+function handleHideBadge(hoverItem: ShowFiles) {
+  hoverItem.show = false
+}
 
 const messageUI = useMessage()
 const customRequest = ({
@@ -119,50 +132,93 @@ const customRequest = ({
   onError,
   onProgress,
 }: UploadCustomRequestOptions) => {
-  const formData = new FormData()
-  if (data) {
-    Object.keys(data).forEach((key) => {
-      formData.append(
-        key,
-        data[key as keyof UploadCustomRequestOptions["data"]]
-      )
-    })
-  }
   showFileModal.value = true
   console.log(file, "上传的文件")
-  const blobFile = new Blob([file.file], { type: file.type })
+  const blobFile = new Blob([file.file as File], { type: file.type as string })
   const imgUrl = window.URL.createObjectURL(blobFile)
   console.log(imgUrl)
   showFiles.push({
     type: "img",
     src: imgUrl,
     show: false,
+    file: file.file as File,
   })
-  formData.append(file.name, file.file as File)
 }
 
-function handleShowBadge(hoverItem: ShowFiles) {
-  hoverItem.show = true
+type UploadFile = {
+  filename: string
+  ftpPath: string
+  name: string
+  type: string
 }
-function handleHideBadge(hoverItem: ShowFiles) {
-  hoverItem.show = false
+let needUploadFilesNum = 0
+let successFiles: UploadFile[] = []
+let failFiles: ShowFiles[] = []
+async function handleAfterRead() {
+  needUploadFilesNum = showFiles.length
+  for (let singleFile of showFiles) {
+    console.log(singleFile, "上传的文件")
+    const res = await uploadFilePromise(singleFile.file)
+    if (res) {
+      successFiles = successFiles.concat(res)
+    } else {
+      failFiles.push(singleFile)
+    }
+  }
+
+  const completeFilesLeg = failFiles.length + successFiles.length
+  console.log(needUploadFilesNum, "需要被上传的文件")
+  console.log(completeFilesLeg, "已完成的数量")
+  if (completeFilesLeg === needUploadFilesNum) {
+    console.log(failFiles, "上传失败的文件")
+    console.log(successFiles, "成功上传的文件")
+    successFiles.forEach((o) => {
+      sendMessage("image", JSON.stringify(o))
+    })
+    // 上传成功，上传失败仅针对一次上传而言
+    successFiles = []
+    failFiles = []
+  }
 }
+async function uploadFilePromise(singleFile: File) {
+  const formData = new FormData()
+  var params = {
+    appID: "admin",
+    uploadID: "",
+    ftpDirPath: "/chat/" + uuid(),
+  }
+  formData.append("data", base64.encode(JSON.stringify(params)))
+  formData.append("files", singleFile)
+  const res = await httpUploadFile(formData)
+  const resData = res.data
+  if (resData.code === "0") {
+    const file = {
+      ...resData.files[0],
+      ...getFileType({ fileName: resData.files[0].filename }),
+    }
+    console.log(file, "上传")
+    return file
+  }
+}
+function handleDelFile() {}
+
 // 发送消息
 function handleSend() {
-  emits("send", message.value)
+  sendMessage("text", message.value)
+}
+
+function sendMessage(type: string, content: string) {
   const { userInfo } = userStore.user
   const userMessage = {
     chatUserId: userInfo.chatUserId,
     chatUserFriendId: chatStore.chat.chatingPerson!.chatUserId,
     sendRole: "server",
-    content: message.value,
-    messageType: "text",
+    content: content,
+    messageType: type,
     time: new Date().valueOf(),
     token: userStore.user.token,
   }
   console.log(userMessage, "消息")
-
-  console.log(socketIo, "hahha")
 
   socketIo._socket.emit("CustomerMessage", userMessage)
 }

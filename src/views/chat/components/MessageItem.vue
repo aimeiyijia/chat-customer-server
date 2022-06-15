@@ -14,12 +14,17 @@
         <span class="username">{{ props.data.username }}</span>
         <span>{{ getFormatTime(props.data.time) }}</span>
       </div>
-      <div class="content">
-        <n-image
-          v-if="props.data.messageType === 'image'"
-          :src="imgUrl + props.data.content"
-        ></n-image>
-        <div class="text" v-else>
+      <div class="content-image" v-if="props.data.messageType === 'image'">
+        <div class="image">
+          <n-image
+            object-fit="contain"
+            style="height: 100%"
+            :src="imgUrl + props.data.imageContent.ftpPath"
+          />
+        </div>
+      </div>
+      <div class="content" v-else>
+        <div class="text">
           {{ props.data.content }}
         </div>
       </div>
@@ -38,11 +43,16 @@
         <span>{{ getFormatTime(props.data.time) }}</span>
         <span class="username">{{ props.data.username }}</span>
       </div>
-      <div class="content">
-        <div class="image" v-if="props.data.messageType === 'image'">
-          <n-image :src="imgUrl + props.data.content" />
+      <div class="content-image" v-if="props.data.messageType === 'image'">
+        <div class="image">
+          <n-image
+            object-fit="contain"
+            :src="imgUrl + props.data.imageContent.ftpPath"
+          />
         </div>
-        <div class="text" v-else>
+      </div>
+      <div class="content" v-else>
+        <div class="text">
           {{ props.data.content }}
         </div>
       </div>
@@ -64,7 +74,7 @@ const props = defineProps({
     required: true,
   },
 })
-const imgUrl = ""
+const imgUrl = "http://192.168.0.181:90/download"
 function handleMessageClick() {
   console.log(props.data)
 }
@@ -106,12 +116,13 @@ function getFormatTime(time: number) {
       border-radius: 8px;
       margin-right: 4px;
     }
-
+    .content-image,
     .content {
       position: relative;
       border-radius: 4px;
       margin-top: 4px;
-
+    }
+    .content {
       &:before {
         content: "";
         position: absolute;
@@ -144,12 +155,23 @@ function getFormatTime(time: number) {
 
   .image {
     background-color: #f2f5f7;
-    height: 240px;
-    width: 350px;
+    /* height: 240px; */
+    /* width: 350px; */
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 4px;
+
+    .n-image {
+      width: 100%;
+      height: 100%;
+      ::v-deep img {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+      }
+    }
   }
 
   &.left {

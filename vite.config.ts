@@ -13,6 +13,12 @@ export default defineConfig({
   server: {
     port: 2022,
     proxy: {
+      "/api/upload": {
+        target: "http://192.168.0.181:90",
+        ws: true,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
       "/api": {
         target: "http://192.168.2.74:8887",
         ws: true,

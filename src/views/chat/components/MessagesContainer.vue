@@ -62,6 +62,9 @@ function assortByUseId(messageData: Message[]): Message[] {
       o.position = "left"
       Object.assign(o, chatingPerson)
     }
+    if (o.messageType === "image") {
+      o.imageContent = JSON.parse(o.content)
+    }
     return o
   })
 }
