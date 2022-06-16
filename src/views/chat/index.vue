@@ -25,7 +25,7 @@ function createSocketConnect() {
   socket = socketIo.connectSocket()
   setSocketListener()
 
-  console.log(toRaw(userStore.user.userInfo), '用户信息')
+  console.log(toRaw(userStore.user.userInfo), "用户信息")
   // 获取客户原来的咨询信息
   socket.emit("ServerChatData", toRaw(userStore.user.userInfo))
 }
@@ -33,11 +33,13 @@ function createSocketConnect() {
 function setSocketListener() {
   // 登录后获取所有的聊天列表
   socket.on("ServerChatData", (data: any) => {
-    console.log(data, '历史接待数据')
+    console.log(data, "历史接待数据")
     const friendData = data.data.friendData
     chatStore.setChatPersons(friendData)
 
-    friendData.forEach((o: User) => {
+    friendData.forEach((o: Customer) => {
+      // 不在线不主动接待
+      if (o.isOnline !== "on") return
       socket.emit("ReceptionCustomer", {
         chatUserId: userStore.user.userInfo.chatUserId,
         chatUserFriendId: o.chatUserId,
@@ -46,7 +48,7 @@ function setSocketListener() {
   })
   // 监听客户分配客服事件，便于重新渲染聊天列表
   socket.on("AssignServer", (data: any) => {
-    console.log(data, '分配客服')
+    console.log(data, "分配客服")
     const newCustomer = data.data
     chatStore.addChatPerson(newCustomer)
 
@@ -59,6 +61,11 @@ function setSocketListener() {
   socket.on("CustomerMessage", (data: any) => {
     console.log(data, "收到消息")
     chatStore.updateChatMessage(data.data)
+  })
+
+  socket.on("ChangeMessageStatus", (data: any) => {
+    console.log(data, "已读")
+    chatStore.setUnreadToRead(data.data)
   })
 }
 </script>

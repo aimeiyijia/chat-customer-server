@@ -3,8 +3,6 @@ import { defineStore } from "pinia"
 import cloneDeep from "clone-deep"
 import omit from "object.omit"
 
-import { useUserStore } from "@/store/index"
-const userStore = useUserStore()
 interface IChatPerson {
   chatPersons: Customer[]
   chatingPerson: Omit<Customer, "messages" | "lastMessage"> | null
@@ -21,10 +19,14 @@ export const useChatStore = defineStore(
     function processRawChatData(chatData: Customer[]): Customer[] {
       return cloneDeep(chatData).map((o: Customer): Customer => {
         const messsages = o.messages ? o.messages : []
+        const lastMessage = o.lastMessage
+          ? o.lastMessage
+          : messsages[messsages.length - 1]
         return {
           ...o,
           messages: messsages,
-          unReadCount: 0,
+          noReadCount: o.noReadCount ? o.noReadCount : 0,
+          lastMessage,
         }
       })
     }
@@ -59,13 +61,23 @@ export const useChatStore = defineStore(
             chat.chatingPerson.chatUserId !== assortVal.chatUserId &&
             chat.chatingPerson.chatUserId !== assortVal.chatUserFriendId
           ) {
-            ;(o.unReadCount as number)++
+            o.noReadCount++
           }
         }
         return o
       })
+      console.log(a, "新消息被加入")
       chat.chatPersons = a
-      console.log("新人")
+    }
+
+    function setUnreadToRead(user: User) {
+      console.log(user, "123456")
+      chat.chatPersons.forEach((o) => {
+        if (o.chatUserId === user.chatUserId) {
+          console.log(user, "设为已读的人")
+          o.noReadCount = 0
+        }
+      })
     }
 
     function clearChatPerson() {
@@ -89,6 +101,7 @@ export const useChatStore = defineStore(
       setChatingPerson,
       clearChatingPerson,
       updateChatMessage,
+      setUnreadToRead,
     }
   },
   {

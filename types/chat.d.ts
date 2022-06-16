@@ -3,10 +3,14 @@ interface FriendGather {
   [chatUserId: string]: Customer
 }
 
+// role 账号登录是"customer"，游客是"tourist"，客服是“server”，机器是‘robot’
+
 interface Customer {
   chatUserId: string
   username: string
   avatar?: string
+  isOnline: string
+  noReadCount: number
   role: string
   tag?: string
   messages: Message[] | any[]
@@ -21,16 +25,23 @@ interface UserMap {
   chatUserId: string
 }
 
+interface ImageContent {
+  filename: string
+  ftpPath: string
+  name: string
+  type: string
+}
 // 好友消息
 interface Message {
   chatUserId: string
   chatUserFriendId: string
   content: string
+  imageContent?: ImageContent
   messageType: MessageType
   time: number
   position: string
   type?: string
-  avatar: string, 
+  avatar: string
   username: string
 }
 
@@ -46,6 +57,8 @@ interface SendMessage {
 declare enum MessageType {
   text = "text",
   image = "image",
+  auto = "auto",
+  url = "url"
 }
 
 // 图片尺寸

@@ -19,7 +19,7 @@
           <n-image
             object-fit="contain"
             style="height: 100%"
-            :src="imgUrl + props.data.imageContent.ftpPath"
+            :src="imgUrl + props.data.imageContent!.ftpPath"
           />
         </div>
       </div>
@@ -47,14 +47,40 @@
         <div class="image">
           <n-image
             object-fit="contain"
-            :src="imgUrl + props.data.imageContent.ftpPath"
+            :src="imgUrl + props.data.imageContent!.ftpPath"
           />
         </div>
       </div>
-      <div class="content" v-else>
+      <div class="content" v-if="props.data.messageType === 'text'">
         <div class="text">
           {{ props.data.content }}
         </div>
+      </div>
+      <div class="content" v-if="props.data.messageType === 'auto'">
+        <div class="text">
+          <div class="list">
+            <!-- <div class="list_title">
+              {{ JSON.parse(props.data.content).name }}
+            </div> -->
+            <div
+              class="list_item"
+              v-for="item in JSON.parse(props.data.content).links"
+            >
+              <a class="text url" :href="item.link" target="_blank">
+                {{ item.name }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content" v-if="props.data.messageType === 'url'">
+        <a
+          class="text url"
+          :href="JSON.parse(props.data.content).link"
+          target="_blank"
+        >
+          {{ JSON.parse(props.data.content).name }}
+        </a>
       </div>
     </div>
     <!-- <n-avatar shape="square" :size="48" :src="imgUrl + props.data.avatar"></n-avatar> -->
@@ -64,7 +90,7 @@
 
 <script setup lang="ts">
 import { reactive, shallowReactive, markRaw, defineProps, PropType } from "vue"
-import { NIcon, NAvatar, NBadge, NImage } from "naive-ui"
+import { NIcon, NAvatar, NBadge, NImage, NList, NListItem } from "naive-ui"
 import multiavatar from "@multiavatar/multiavatar/esm"
 import moment from "dayjs"
 const props = defineProps({
@@ -143,12 +169,13 @@ function getFormatTime(time: number) {
     display: inline-block;
     overflow: hidden;
     word-break: break-word;
+    white-space: break-spaces;
   }
 
   .text {
     background-color: #f2f5f7;
     color: #fff;
-    padding: 8px;
+    padding: 4px 8px;
     text-align: left;
     border-radius: 4px;
   }

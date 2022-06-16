@@ -10,6 +10,7 @@
 
     <div class="chat-person_container">
       <n-scrollbar style="height: calc(100% - 54px)">
+        <!-- <n-badge dot> </n-badge> -->
         <div
           class="chat-person_item"
           v-for="item in chatPersonList"
@@ -18,7 +19,9 @@
           @click="handleClickChatPerson(item)"
         >
           <n-icon size="42">
-            <i v-html="getAvatar(item.chatUserId)"></i>
+            <n-badge dot :type="item.isOnline === 'on' ? 'info' : 'error'">
+              <i v-html="getAvatar(item.chatUserId)"></i>
+            </n-badge>
           </n-icon>
 
           <div class="chat-person_desc">
@@ -30,9 +33,10 @@
             </div>
             <div class="bottom">
               <div class="chat-person_last-message">
-                {{ item.lastMessage ? item.lastMessage.content : "" }}
+                {{ item.lastMessage ? renderContent(item.lastMessage) : "无" }}
               </div>
-              <n-badge color="#F56C6C" :value="item.unReadCount" :max="99" />
+              <!-- <n-badge color="#F56C6C" :value="item.unReadCount" :max="99" /> -->
+              <n-badge color="#F56C6C" :value="item.noReadCount" :max="99" />
             </div>
           </div>
         </div>
@@ -47,22 +51,52 @@ import { ref, computed } from "vue"
 import { NSpace, NAvatar, NBadge, NInput, NIcon, NScrollbar } from "naive-ui"
 import multiavatar from "@multiavatar/multiavatar/esm"
 import { useChatStore } from "@/store/chat"
+import { useUserStore } from "@/store/index"
+import socketIo from "@/socket"
 
+const userStore = useUserStore()
 const chatStore = useChatStore()
 const chatPersonList = computed(() => {
   return chatStore.chat.chatPersons
 })
 
 const chatingPerson = computed(() => {
-  console.log('列表变化')
+  console.log("列表变化")
   return chatStore.chat.chatingPerson
 })
 
-function getAvatar(name: any): string {
+function getAvatar(name: string): string {
   return multiavatar(name)
 }
 function handleClickChatPerson(item: Customer) {
   chatStore.setChatingPerson(item)
+  const { userInfo, token } = userStore.user
+  socketIo._socket.emit("ChangeMessageStatus", {
+    chatUserId: userInfo.chatUserId,
+    chatUserFriendId: item.chatUserId,
+    token,
+  })
+
+  socketIo._socket.emit("ReceptionCustomer", {
+    chatUserId: userStore.user.userInfo.chatUserId,
+    chatUserFriendId: item.chatUserId,
+  })
+}
+
+function renderContent(lastMessage: Message) {
+  switch (lastMessage.messageType) {
+    case "text":
+      return lastMessage.content
+    case "image":
+      return `[图片]`
+    case "auto":
+      return `[机器人自动回复]`
+    case "url":
+      return `[机器人自动回复]`
+
+    default:
+      return "无"
+  }
 }
 </script>
 
@@ -91,11 +125,11 @@ function handleClickChatPerson(item: Customer) {
     background-color: #eee;
   }
   &.actived {
-    background-color: #dadada;
+    background-color: #e4e4e4;
   }
   :deep .n-badge-sup {
     left: 86%;
-    top: -0.7em;
+    top: 0;
   }
   ::v-deep .n-avatar {
     flex: 0 0 auto;
