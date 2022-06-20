@@ -80,6 +80,7 @@ function handleClickChatPerson(item: Customer) {
   socketIo._socket.emit("ReceptionCustomer", {
     chatUserId: userStore.user.userInfo.chatUserId,
     chatUserFriendId: item.chatUserId,
+    token: userStore.user.token,
   })
 }
 
@@ -127,11 +128,12 @@ function renderContent(lastMessage: Message) {
   &.actived {
     background-color: #e4e4e4;
   }
-  :deep .n-badge-sup {
+  :deep(.n-badge-sup) {
     left: 86%;
     top: 0;
   }
-  ::v-deep .n-avatar {
+
+  :deep(.n-avatar) {
     flex: 0 0 auto;
   }
 

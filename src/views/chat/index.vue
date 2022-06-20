@@ -12,9 +12,11 @@ import socketIo from "@/socket"
 import BarFunc from "./components/BarFunc.vue"
 import BarChatList from "./components/BarChatList.vue"
 import ChatArea from "./components/ChatArea.vue"
+import { useRouter } from "vue-router"
 import { useUserStore } from "@/store/index"
 import { useChatStore } from "@/store/chat"
 import cloneDeep from "clone-deep"
+const router = useRouter()
 const userStore = useUserStore()
 const chatStore = useChatStore()
 let socket: SocketIOClient.Socket
@@ -27,13 +29,25 @@ function createSocketConnect() {
 
   console.log(toRaw(userStore.user.userInfo), "用户信息")
   // 获取客户原来的咨询信息
-  socket.emit("ServerChatData", toRaw(userStore.user.userInfo))
+  socket.emit("ServerChatData", {
+    ...toRaw(userStore.user.userInfo),
+    token: userStore.user.token,
+  })
 }
 
 function setSocketListener() {
   // 登录后获取所有的聊天列表
   socket.on("ServerChatData", (data: any) => {
     console.log(data, "历史接待数据")
+    if (data.code === 401) {
+      console.log("登录超期")
+      router.push({ name: "Login" })
+      userStore.clearToken()
+      userStore.clearUserInfo()
+      chatStore.clearChatPerson()
+      chatStore.clearChatingPerson()
+      return
+    }
     const friendData = data.data.friendData
     chatStore.setChatPersons(friendData)
 
@@ -43,6 +57,7 @@ function setSocketListener() {
       socket.emit("ReceptionCustomer", {
         chatUserId: userStore.user.userInfo.chatUserId,
         chatUserFriendId: o.chatUserId,
+        token: userStore.user.token,
       })
     })
   })
@@ -55,6 +70,7 @@ function setSocketListener() {
     socket.emit("ReceptionCustomer", {
       chatUserId: userStore.user.userInfo.chatUserId,
       chatUserFriendId: newCustomer.chatUserId,
+      token: userStore.user.token,
     })
   })
   // 顾客发来的消息

@@ -237,8 +237,9 @@ function sendMessage(type: string, content: string) {
       margin-left: 12px;
     }
   }
-  ::v-deep .n-input__border,
-  ::v-deep .n-input__state-border {
+
+  :deep(.n-input__border),
+  :deep(.n-input__state-border) {
     display: none;
   }
   .n-input--textarea {

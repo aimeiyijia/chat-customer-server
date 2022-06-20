@@ -193,7 +193,7 @@ function getFormatTime(time: number) {
     .n-image {
       width: 100%;
       height: 100%;
-      ::v-deep img {
+      :deep(img) {
         display: inline-block;
         width: 100%;
         height: 100%;
