@@ -141,6 +141,15 @@ function setSocketListener() {
     console.log(data, "收到消息")
     chatStore.updateChatMessage(data.data)
     openNotification("收到了新消息")
+
+    // 如果正好是当前接待客户发来的消息，则将消息直接置为已读
+    if (data.data.chatUserId === chatStore.chat.chatingPerson!.chatUserId) {
+      socketIo._socket.emit("ChangeMessageStatus", {
+        chatUserId: userStore.user.userInfo!.chatUserId,
+        chatUserFriendId: data.data.chatUserId,
+        token: userStore.user.token,
+      })
+    }
   })
 
   socket.on("ChangeMessageStatus", (data: any) => {
