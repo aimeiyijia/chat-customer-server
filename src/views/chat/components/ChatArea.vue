@@ -2,7 +2,7 @@
   <div class="chat-area-container">
     <chat-person-info></chat-person-info>
     <messages-container></messages-container>
-    <chat-input @send="handleSend"></chat-input>
+    <chat-input></chat-input>
   </div>
 </template>
 
@@ -10,9 +10,6 @@
 import MessagesContainer from "./MessagesContainer.vue"
 import ChatPersonInfo from "./ChatPersonInfo.vue"
 import ChatInput from "./ChatInput.vue"
-function handleSend(msg) {
-  console.log(msg, "发送的消息")
-}
 </script>
 
 <style lang="scss" scoped>

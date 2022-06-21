@@ -3,6 +3,7 @@ import {
   NConfigProvider,
   GlobalThemeOverrides,
   NMessageProvider,
+  NNotificationProvider,
 } from "naive-ui"
 import Layout from "@/views/layout/index.vue"
 const themeOverrides: GlobalThemeOverrides = {
@@ -19,7 +20,9 @@ const themeOverrides: GlobalThemeOverrides = {
 <template>
   <n-config-provider class="app-container" :theme-overrides="themeOverrides">
     <n-message-provider>
-      <layout></layout>
+      <n-notification-provider>
+        <layout></layout>
+      </n-notification-provider>
     </n-message-provider>
   </n-config-provider>
 </template>

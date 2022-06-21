@@ -7,22 +7,71 @@
 </template>
 
 <script setup lang="ts">
-import { toRaw, onMounted } from "vue"
+import { ref, toRaw, onMounted } from "vue"
 import socketIo from "@/socket"
 import BarFunc from "./components/BarFunc.vue"
 import BarChatList from "./components/BarChatList.vue"
 import ChatArea from "./components/ChatArea.vue"
 import { useRouter } from "vue-router"
+
+import { useNotification } from "naive-ui"
+
 import { useUserStore } from "@/store/index"
 import { useChatStore } from "@/store/chat"
-import cloneDeep from "clone-deep"
+
+const notification = useNotification()
+
 const router = useRouter()
 const userStore = useUserStore()
 const chatStore = useChatStore()
 let socket: SocketIOClient.Socket
+
+let isHasNoticePermission = ref(false)
+let isCurTabFocus = ref(true)
+
 onMounted(() => {
   createSocketConnect()
+  getNotificationPermission()
+  addWindowlisteners()
 })
+
+// 获取浏览器通知权限
+function getNotificationPermission() {
+  if (window.Notification) {
+    if (Notification.permission === "granted") {
+      isHasNoticePermission.value = true
+    } else {
+      Notification.requestPermission(function (status) {
+        if (Notification.permission !== status) {
+          isHasNoticePermission.value = true
+        }
+      })
+    }
+  }
+}
+// 监听浏览器窗口是否聚焦
+function addWindowlisteners() {
+  window.onfocus = function (event) {
+    console.log("聚焦--------", event)
+    isCurTabFocus.value = true
+  }
+
+  window.onblur = function (event) {
+    console.log("失焦--------", event)
+    isCurTabFocus.value = false
+  }
+}
+
+function openNotification(msg: string) {
+  // 有通知权限，并且当前窗口不处在激活态时才能发起通知
+  if (isHasNoticePermission.value && !isCurTabFocus.value) {
+    new Notification("破产客服系统通知", {
+      icon: "https://cdn2.iconfinder.com/data/icons/mixed-rounded-flat-icon/512/megaphone-64.png",
+      body: msg,
+    })
+  }
+}
+
 function createSocketConnect() {
   socket = socketIo.connectSocket()
   setSocketListener()
@@ -73,6 +122,12 @@ function setSocketListener() {
     // existFlag为true是新分配客户
     if (newCustomer.existFlag) {
       chatStore.addChatPerson(newCustomer)
+      notification.info({
+        duration: 3000,
+        content: "有新客户咨询问题",
+        meta: `用户名：${newCustomer.username}`,
+      })
+      openNotification("有新客户咨询问题")
     }
 
     socket.emit("ReceptionCustomer", {
@@ -85,6 +140,7 @@ function setSocketListener() {
   socket.on("CustomerMessage", (data: any) => {
     console.log(data, "收到消息")
     chatStore.updateChatMessage(data.data)
+    openNotification("收到了新消息")
   })
 
   socket.on("ChangeMessageStatus", (data: any) => {

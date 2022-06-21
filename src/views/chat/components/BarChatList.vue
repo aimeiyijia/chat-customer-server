@@ -27,7 +27,11 @@
           <div class="chat-person_desc">
             <div class="top">
               <div class="chat-person_nick-name">
-                {{ item.username }}
+                {{
+                  item.role === "tourist"
+                    ? `游客--${item.username}`
+                    : item.username
+                }}
               </div>
               <span class="chat-person_message-time">22:50</span>
             </div>

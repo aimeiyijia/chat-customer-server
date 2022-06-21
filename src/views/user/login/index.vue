@@ -126,6 +126,24 @@ onMounted(() => {
       })
     })
   })
+
+  window.onfocus = function (event) {
+    console.log('聚焦--------', event)
+  }
+
+  window.onblur = function (event) {
+    console.log('失焦--------', event)
+  }
+
+  // setInterval(() => {
+  //   if (window.Notification && Notification.permission === "granted") {
+  //     console.log(1234)
+  //     var n = new Notification('收到了新消息', {
+  //           icon: 'https://cdn2.iconfinder.com/data/icons/mixed-rounded-flat-icon/512/megaphone-64.png',
+  //           body: 'hahahahhahaha'
+  //       })
+  //   }
+  // }, 2000)
 })
 
 let loginType = ref("login")

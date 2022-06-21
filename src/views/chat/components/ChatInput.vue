@@ -42,7 +42,7 @@
                   <n-icon size="18" :component="ColorWandOutline" />
                   <n-icon size="18" :component="TrashOutline" />
                 </template>
-                <n-image :src="item.src" />
+                <n-image :src="item.src" object-fit="contain" />
               </n-badge>
             </div>
           </n-space>
@@ -74,11 +74,9 @@
 
 <script setup lang="ts">
 import { ref, markRaw, reactive } from "vue"
-import to from "await-to-js"
 import base64 from "base-64"
 import {
   FolderOutline,
-  CloseCircleOutline,
   TrashOutline,
   ColorWandOutline,
 } from "@vicons/ionicons5"
@@ -219,6 +217,8 @@ function sendMessage(type: string, content: string) {
     token: userStore.user.token,
   }
   console.log(userMessage, "消息")
+
+  message.value = ''
 
   socketIo._socket.emit("CustomerMessage", userMessage)
 }
