@@ -51,7 +51,7 @@
             type="submit"
             id="submit"
             value="Submit"
-            @click="handleLogin"
+            @click="handleBeforeSubmit"
           />
         </div>
       </div>
@@ -60,14 +60,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed,reactive, nextTick, onMounted } from "vue"
+import { ref, computed, reactive, nextTick, onMounted } from "vue"
 import { AddOutline } from "@vicons/ionicons5"
 import { NIcon, NBadge } from "naive-ui"
 import anime, { AnimeInstance } from "animejs"
 import { useUserStore } from "@/store/index"
 import { useRouter } from "vue-router"
 import { processReturn } from "@/http/utils"
-import { login } from "@/api"
+import { httpLogin, httpRegister } from "@/api"
 const router = useRouter()
 const userStore = useUserStore()
 onMounted(() => {
@@ -141,14 +141,33 @@ const finalLoginType = computed(() => {
 })
 
 let loginForm = reactive({
-  username: "客服1",
+  username: "liuxiaofan",
   password: "123",
-  platform: "server",
+  role: "server",
 })
 
+function handleBeforeSubmit() {
+  if (loginType.value === "login") {
+    handleLogin()
+  } else {
+    handleRegister()
+  }
+}
+
 async function handleLogin() {
-  const res = await processReturn(login(loginForm))
-  console.log(res, "返回值")
+  const res = await processReturn(httpLogin(loginForm))
+  console.log(res, "登录返回值")
+  if (res) {
+    const { token, user } = res
+    userStore.setToken(token)
+    userStore.setUserInfo(user)
+    console.log(userStore.user, "状态")
+    router.push({ name: "Chat" })
+  }
+}
+async function handleRegister() {
+  const res = await processReturn(httpRegister(loginForm))
+  console.log(res, "注册返回值")
   if (res) {
     const { token, user } = res
     userStore.setToken(token)

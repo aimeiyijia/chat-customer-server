@@ -34,7 +34,7 @@ export const useChatStore = defineStore(
     function setChatPersons(val: Customer[]) {
       chat.chatPersons = processRawChatData(val)
       if (!chat.chatingPerson) {
-        chat.chatingPerson = chat.chatPersons[0]
+        setChatingPerson(chat.chatPersons[0])
       }
       console.log("人员初始化", chat.chatPersons)
     }
@@ -43,6 +43,11 @@ export const useChatStore = defineStore(
       // 数据量少的时候性能差距不大，第二种方式更简洁一些
       // chat.chatPersons = chat.chatPersons.concat(processRawChatData([val]))
       chat.chatPersons = [...chat.chatPersons, ...processRawChatData([val])]
+      // 此时没有当前接待的人，说明客服是第一次分配到客户
+      // 那么就将第一次分配的客户设为当前接待人
+      if (!chat.chatingPerson) {
+        setChatingPerson(chat.chatPersons[0])
+      }
       console.log("人员新增")
     }
 
@@ -55,6 +60,7 @@ export const useChatStore = defineStore(
           o.chatUserId === assortVal.chatUserId ||
           o.chatUserId === assortVal.chatUserFriendId
         ) {
+          o.lastMessage = assortVal
           o.messages.push(assortVal)
           if (
             chat.chatingPerson &&
@@ -85,7 +91,7 @@ export const useChatStore = defineStore(
     }
 
     function setChatingPerson(val: Customer) {
-      console.log("设置聊天的人", omit(val, ["messages", "lastMessage"]))
+      // 去掉messages, lastMessage是为了减轻localStorge存储压力
       chat.chatingPerson = omit(val, ["messages", "lastMessage"])
     }
 

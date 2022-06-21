@@ -89,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, shallowReactive, markRaw, defineProps, PropType } from "vue"
+import { reactive, shallowReactive, markRaw, PropType } from "vue"
 import { NIcon, NAvatar, NBadge, NImage, NList, NListItem } from "naive-ui"
 import multiavatar from "@multiavatar/multiavatar/esm"
 import moment from "dayjs"

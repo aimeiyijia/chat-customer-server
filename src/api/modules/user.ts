@@ -4,7 +4,7 @@ import fetch from '@/http';
  * 客服注册
  * @param params
  */
- export const register = (params: User) => {
+ export const httpRegister = (params: any) => {
   return fetch.post(`/broke/chatUser/register`, {
     ...params,
   });
@@ -13,7 +13,7 @@ import fetch from '@/http';
  * 客户，客服登录
  * @param params
  */
- export const login = (params: any) => {
+ export const httpLogin = (params: any) => {
   return fetch.post(`/broke/chatUser/login`, {
     ...params,
   });

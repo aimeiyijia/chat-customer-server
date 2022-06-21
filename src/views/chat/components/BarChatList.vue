@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { Search } from "@vicons/ionicons5"
-import { ref, computed } from "vue"
+import { ref, computed, watch } from "vue"
 import { NSpace, NAvatar, NBadge, NInput, NIcon, NScrollbar } from "naive-ui"
 import multiavatar from "@multiavatar/multiavatar/esm"
 import { useChatStore } from "@/store/chat"
@@ -61,26 +61,36 @@ const chatPersonList = computed(() => {
 })
 
 const chatingPerson = computed(() => {
-  console.log("列表变化")
+  console.log("接待的人变化")
   return chatStore.chat.chatingPerson
 })
+
+watch(
+  () => chatingPerson.value,
+  (val) => {
+    console.log(val, "设为已读")
+    const { userInfo, token } = userStore.user
+    socketIo._socket.emit("ChangeMessageStatus", {
+      chatUserId: userInfo!.chatUserId,
+      chatUserFriendId: (val as Customer).chatUserId,
+      token,
+    })
+  }
+)
 
 function getAvatar(name: string): string {
   return multiavatar(name)
 }
 function handleClickChatPerson(item: Customer) {
+  if (chatingPerson.value && chatingPerson.value.chatUserId === item.chatUserId)
+    return
   chatStore.setChatingPerson(item)
   const { userInfo, token } = userStore.user
-  socketIo._socket.emit("ChangeMessageStatus", {
-    chatUserId: userInfo.chatUserId,
-    chatUserFriendId: item.chatUserId,
-    token,
-  })
 
   socketIo._socket.emit("ReceptionCustomer", {
-    chatUserId: userStore.user.userInfo.chatUserId,
+    chatUserId: userInfo!.chatUserId,
     chatUserFriendId: item.chatUserId,
-    token: userStore.user.token,
+    token,
   })
 }
 

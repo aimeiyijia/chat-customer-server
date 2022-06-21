@@ -32,29 +32,48 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, shallowReactive, markRaw } from "vue";
-import { NIcon, NAvatar, NBadge, NImage } from "naive-ui";
+import { ref, reactive, watch, markRaw } from "vue"
+import { NIcon, NAvatar, NBadge, NImage } from "naive-ui"
 import {
   CogSharp,
   ChatbubblesOutline,
   DocumentAttachOutline,
-} from "@vicons/ionicons5";
+} from "@vicons/ionicons5"
+import { useChatStore } from "@/store/chat"
+const chatStore = useChatStore()
+
+let unTotalRead = ref(0)
+watch(
+  () => chatStore.chat.chatPersons,
+  (val) => {
+    unTotalRead.value = 0
+    val.forEach((o) => {
+      unTotalRead.value =
+        unTotalRead.value + (o.noReadCount ? o.noReadCount : 0)
+    })
+    console.log(unTotalRead, "所有的未读消息")
+  },
+  {
+    deep: true,
+    immediate: true,
+  }
+)
 
 const chatIcons = reactive([
   {
     name: markRaw(ChatbubblesOutline),
     type: "chat",
-    count: 23,
+    count: unTotalRead,
     activated: true,
   },
   { name: markRaw(DocumentAttachOutline), type: "doc", activated: false },
-]);
+])
 function handleSetIconActive(type: string) {
   for (const icon of chatIcons) {
-    console.log(icon);
-    icon.activated = false;
+    console.log(icon)
+    icon.activated = false
     if (icon.type === type) {
-      icon.activated = true;
+      icon.activated = true
     }
   }
 }

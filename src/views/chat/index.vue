@@ -48,6 +48,11 @@ function setSocketListener() {
       chatStore.clearChatingPerson()
       return
     }
+    if (!data.data || !data.data.friendData) {
+      chatStore.clearChatPerson()
+      chatStore.clearChatingPerson()
+      return
+    }
     const friendData = data.data.friendData
     chatStore.setChatPersons(friendData)
 
@@ -55,7 +60,7 @@ function setSocketListener() {
       // 不在线不主动接待
       if (o.isOnline !== "on") return
       socket.emit("ReceptionCustomer", {
-        chatUserId: userStore.user.userInfo.chatUserId,
+        chatUserId: userStore.user.userInfo!.chatUserId,
         chatUserFriendId: o.chatUserId,
         token: userStore.user.token,
       })
@@ -65,10 +70,13 @@ function setSocketListener() {
   socket.on("AssignServer", (data: any) => {
     console.log(data, "分配客服")
     const newCustomer = data.data
-    chatStore.addChatPerson(newCustomer)
+    // existFlag为true是新分配客户
+    if (newCustomer.existFlag) {
+      chatStore.addChatPerson(newCustomer)
+    }
 
     socket.emit("ReceptionCustomer", {
-      chatUserId: userStore.user.userInfo.chatUserId,
+      chatUserId: userStore.user.userInfo!.chatUserId,
       chatUserFriendId: newCustomer.chatUserId,
       token: userStore.user.token,
     })
