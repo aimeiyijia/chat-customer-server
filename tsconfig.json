@@ -6,11 +6,13 @@
     "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
+    "allowJs": true,
     "sourceMap": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
+    "types": ["vite/client", "node"],
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
